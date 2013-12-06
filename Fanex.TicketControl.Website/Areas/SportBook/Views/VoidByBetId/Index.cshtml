@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = Labels.TitlePage;
+}
+@using Fanex.TicketControl.Core.Resources
+@section Head {
+    <link href="~/Scripts/_Libs/TimePicker/jquery-ui-timepicker-addon.css" rel="stylesheet"
+        type="text/css" />
+}
+@section Styles {
+    <link href="~/Areas/SportBook/Styles/VoidByBetId.less" rel="stylesheet" type="text/css" />
+}
+@section Headline {
+    <div class="title">
+        <a href="~/">Home</a> / Void By BetID
+    </div>
+}
+@using (Html.BeginForm("Index", "VoidByBetId", FormMethod.Post, new { id = "VoidByBetIdForm" }))
+{
+    <div class="filter-bar">
+        @if (!ViewBag.HasVoidBetIdAll)
+        {
+            <div class="note-filter-bar">
+                <i class="icon-warning-sign"></i>
+                @Labels.You_only_void_Unsettled_or_Refunded_tickets
+            </div>
+        }
+        <div class="clear-fix">
+        </div>
+        <div class="filter-bar-inner">
+            <div class="filter-row">
+                <div class="filter-cell  tick-list">
+                    <div class="lbl-field span">
+                        <input name="optionType" class="chk-parlay-type" type="radio" id="chkBetId" value="0"
+                            checked="checked" /></div>
+                    <div class="lbl-field span3">
+                        <label for="chkBetId">
+                            By BetID</label>
+                    </div>
+                    <div class="edit-field span">
+                        <input type="text" id="txtBetId" maxlength="19" value="" class="width-140" />
+                    </div>
+                </div>
+            </div>
+            <div class="filter-row">
+                <div class="filter-cell tick-list">
+                    <div class="lbl-field span">
+                        <input name="optionType" class="chk-parlay-type" type="radio" id="chkUsername" value="0" />
+                    </div>
+                    <div class="lbl-field span3">
+                        <label for="chkUsername">
+                            By Username</label>
+                    </div>
+                    <div class="edit-field span5">
+                        <input type="text" id="txtUsername" disabled="disabled" maxlength="50" value="" placeholder="Input a username"
+                            class="width-140" />
+                    </div>
+                </div>
+                <div class="filter-cell">
+                    <div class="edit-field datetime">
+                        <div class="lbl-field span">
+                            <label for="FromDate">
+                                Win/Loss Date (GMT + 8) &nbsp; @Labels.From</label>
+                        </div>
+                        <div class="edit-field span4">
+                            @Html.TextBox("FromDate", string.Empty, new { @readonly = "readonly", @class = "txtCalendar width-90", @mindate = @ViewBag.MinDate, @maxdate = @ViewBag.MaxDate })
+                            <i class="icon-calendar icon-from-transdate-calendar"></i>
+                        </div>
+                        <div class="lbl-field span">
+                            <label for="ToDate">@Labels.To</label>
+                        </div>
+                        <div class="edit-field span5">
+                            @Html.TextBox("ToDate", string.Empty, new { @readonly = "readonly", @class = "txtCalendar width-90", @mindate = @ViewBag.MinDate })
+                            <i class="icon-calendar icon-to-transdate-calendar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-row">
+                <div class="filter-cell">
+                    <input type="button" id="btnSearch" class="submit" value="Search" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="report-content">
+        <div class="display-none content-grid">
+            <div class="freegrid " id="matchInfo">
+            </div>
+        </div>
+        <div class="display-none content-grid">
+            <div class="freegrid " id="ticketInfo">
+            </div>
+        </div>
+        @Html.Partial("_Message")
+        @Html.Partial("_ConfirmDelete")
+    </div>
+}
+@section Foot {
+    @Scripts.Render("~/areas/SportBook/VoidByBetId")
+}

@@ -1,0 +1,139 @@
+<table cellspacing="0" style="border: 1px solid; border-collapse: collapse; font-size: 8pt;
+    font-family: 'Segoe UI',Tahoma,Arial,sans-serif; background-color: #E7F1F3">
+    <tr height="70">
+        <th style="background-color: #404C5A; color: #ffffff; padding-left: 10px; font-size: 20px;
+            text-align: left;">
+            VOID PARLAY BETS INFORMATION
+        </th>
+    </tr>
+    <tr>
+        <td style="padding: 0 0 10px 10px; border-bottom: 1 solid #CBCBCB;">
+            <br />
+            Dear all,<br />
+            Please be notified that the list in table below is the summary of all tickets which
+            have been voided by <span style="text-transform: uppercase; font-weight: bold;">@Model.ActorUsername</span>.
+            <br />
+        </td>
+    </tr>
+    <tr style="border-bottom: 1px solid #CBCBCB; margin-top: 10px; margin-bottom: 10px;">
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 10px 0 0 10px;">
+            <table cellspacing="1" style="background-color: #CBCBCB;">
+                <tr align="center" valign="middle" style="background-color: #7891A5; font-weight: bold;
+                    color: #ffffff;">
+                    <td width="80" height="30">
+                        CODE
+                    </td>
+                    <td width="250">
+                        MATCH EVENT
+                    </td>
+                    <td width="80">
+                        EVENT DATE
+                    </td>
+                </tr>
+                <tr align="center" valign="middle" style="background-color: #ffffff; height: 30px;
+                    font-weight: bold;">
+                    <td>@Model.Match.MatchCode
+                    </td>
+                    <td>@Model.Match.MatchEvent
+                    </td>
+                    <td>@Model.Match.EventDate
+                    </td>
+                </tr>
+            </table>
+            <!--single-bet-->
+            <br />
+            <b>List of voided tickets</b>
+            <table cellspacing="1" style="background-color: #CBCBCB;">
+                <tr align="center" valign="middle" style="background-color: #7891A5; font-weight: bold;
+                    color: #ffffff;">
+                    <td width="25" height="25">
+                        No
+                    </td>
+                    <td width="90">
+                        BetID
+                    </td>
+                    <td width="135">
+                        Member
+                    </td>
+                    <td width="140">
+                        Trans.Date
+                    </td>
+                    <td width="80">
+                        Odds
+                    </td>
+                    <td width="60">
+                        Stake
+                    </td>
+                    <td width="50">
+                        Currency
+                    </td>
+                    <td width="80">
+                        Bettype
+                    </td>
+                    <td width="50">
+                        Status
+                    </td>
+                    <td width="150">
+                        Choice
+                    </td>
+                </tr>
+                @foreach (var transaction in Model.Transactions)
+                {
+                    <tr valign="middle" style="background-color: @(transaction.No % 2 != 0 ? "#FFFFFF" : "#E4F2FD"); height: 25px;">
+                        <td align="center">
+                            @transaction.No
+                        </td>
+                        <td align="center">
+                            @transaction.BetId
+                        </td>
+                        <td align="left">
+                            @transaction.Username
+                        </td>
+                        <td align="center">
+                            @transaction.TransDate
+                        </td>
+                        <td align="right">
+                            @transaction.Odds
+                        </td>
+                        <td align="right">
+                            @transaction.Stake
+                        </td>
+                        <td align="center">
+                            @transaction.CurrencyName
+                        </td>
+                        <td align="center">
+                            @transaction.BetType
+                        </td>
+                        <td align="center">
+                            @transaction.Status
+                        </td>
+                        <td align="right">
+                            @transaction.Choice
+                        </td>
+                    </tr>
+                }
+            </table>
+            <!--/single-bet-->
+            @if (!string.IsNullOrEmpty(Model.UserNegativeBalance))
+            {
+
+                @("<br>Negative Balance Custormers: <b>" + @Model.UserNegativeBalance + "</b>")
+            }
+            <br>
+            Voided by: <b>@Model.ActorUsername</b>
+            <br>
+            Date: <b>@Model.Match.DateTime</b>
+            <br>
+            <br>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding-left: 10px; background-color: #404C5A; color: #ffffff;" height="20">
+            <i>This is system auto generated email, please do not reply to this email directly.</i>
+        </td>
+    </tr>
+</table>

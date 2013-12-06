@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Core">
+    <Setting Key="Core_MatchSelByID" SpName="Acc_MatchSelByID" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="Core_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="Core_Dot_Msg_SetMessage" SpName="Dot_Msg_SetMessage" DbName="SVRMSG.MsgDB.aplweb" />
+    <Setting Key="Core_Dot_Msg_SetUsrMessage" SpName="Dot_Msg_SetUsrMessage" DbName="SVRMSG.MsgDB.aplweb" />
+    <Setting Key="Core_CheckMatchIDwithRefno" SpName="Acc_SpecialDel_CheckMatchIDwithRefno" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="Core_SelBettype" SpName="Acc_BetTypeSel" DbName="SVRCSD.RepDB.aplweb" ></Setting>
+  </Function>
+
+  <Function Name="Misc">
+    <Setting Key="Misc_BettransSelBet_BatchMsg" SpName="Acc_BettransSelBet_BatchMsg" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="Acc_Rpt_TicketsListing" SpName="Acc_Rpt_TicketsListing" DbName="SVRCSD.RepDB.aplweb" ></Setting>
+    <Setting Key="Acc_Rpt_TicketsListingDetail" SpName="Acc_Rpt_TicketsListingDetail" DbName="SVRCSD.RepDB.aplweb" ></Setting>
+  </Function>
+
+  <Function Name="SingleTicket">
+    <Setting Key="SingleTicket_BettransSelSpecialDel" SpName="Acc_BettransSelSpecialDel" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="SingleTicket_BettransDelSpecial" SpName="Acc_BettransDelSpecial" DbName="SVRTXN.TransDB.aplweb" />
+  </Function>
+
+  <Function Name="ParlayTicket">
+    <Setting Key="ParlayTicket_BettransSelDelSpecial_MixParlay" SpName="Acc_BettransSelDelSpecial_MixParlay" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="ParlayTicket_SubTicket_BettransSelSpecialDel_MixParlay" SpName="Acc_BettransSelSpecialDel_MixParlay" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="ParlayTicket_BettransDelSpecialDel_MixParlay" SpName="Acc_BettransDelSpecialDel_MixParlay" DbName="SVRTXN.TransDB.aplweb" />
+  </Function>
+
+  <Function Name="RecoverBet">
+    <Setting Key="RecoverBet_BettransSelRecoverSpecialBets" SpName="Acc_BettransSelRecoverSpecialBets" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="RecoverBet_BettransRecoverSpecialBets" SpName="Acc_BettransRecoverSpecialBets" DbName="SVRTXN.TransDB.aplweb" />
+  </Function>
+
+  <Function Name="RecoverNumberGameTicket">
+    <Setting Key="RecoverNumberGameTicket_BettransSelRecoverBet_NumberGame" SpName="Acc_BettransSelRecoverBet_NumberGame" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="RecoverNumberGameTicket_Acc_BettransRecoverBet_NumberGame" SpName="Acc_BettransRecoverBet_NumberGame" DbName="SVRTXN.TransDB.aplweb" />
+  </Function>
+
+  <Function Name="NumberGameTicket">
+    <Setting Key="NumberGameTicket_BettransSelSpecialDel" SpName="Acc_BettransSelSpecialDel_NumberGame" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="NumberGameTicket_BettransDelSpecial" SpName="Acc_BettransDelSpecial_NumberGame" DbName="SVRTXN.TransDB.aplweb" />
+  </Function>
+
+  <Function Name="OutrightBet">
+    <Setting Key="OutrightBet_BettransDelSpecial_LeagueSelOutright" SpName="Acc_BettransDelSpecial_LeagueSelOutright" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="OutrightBet_BettransDelSpecial_OutrightSel" SpName="Acc_BettransDelSpecial_OutrightSel" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="OutrightBet_BettransSelDelSpecial_Outright" SpName="Acc_BettransSelDelSpecial_Outright" DbName="SVRCSD.RepDB.aplweb" />
+  </Function>
+
+  <Function Name="EarlyKOTicket">
+    <Setting Key="EarlyKOTicket_BettransSelSpecialDel_EarlyKO" SpName="Acc_BettransSelSpecialDel_EarlyKO" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="EarlyKOTicket_BettransDelSpecialDel_EarlyKO" SpName="Acc_BettransDelSpecialDel_EarlyKO" DbName="SVRTXN.TransDB.aplweb" />
+  </Function>
+
+  <Function Name="Void By BetId">
+    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="SVRCSD.RepDB.aplweb" />
+    <Setting Key="Acc_BettransDelBet" SpName="Acc_BettransDelBet" DbName="SVRTXN.TransDB.aplweb" />
+    <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="SVRCSD.RepDB.aplweb" />
+  </Function>
+
+  <Function Name="Mailing list">
+    <Setting Key="NAP_MailingList_GetByFunctionKeyAndSite" SpName="NAP_MailingList_GetByFunctionKeyAndSite" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+      <Mapping DataField="ListId" ObjectProperty="Id" />
+      <Mapping DataField="ListName" ObjectProperty="Name" />
+      <Mapping DataField="ListKey" ObjectProperty="Key" />
+      <Mapping DataField="SiteId" ObjectProperty="Id" />
+      <Mapping DataField="SiteName" ObjectProperty="Name" />
+      <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
+      <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
+      <Mapping DataField="FunctionId" ObjectProperty="Id" />
+      <Mapping DataField="FunctionName" ObjectProperty="Name" />
+    </Setting>
+  </Function>
+</Functions>
