@@ -64,8 +64,12 @@ namespace Fanex.TicketControl.SportBook.Services.Implement
                 var match = _coreService.GetMatchInfo(matchInfoCriteria);
                 var listTicket = _repository.GetTicketRecover(criteria, ref result);
 
-                model.Match = match;
-                model.Tickets = AssignDataOnGroup(listTicket, match.HomeId, match.AwayId);
+                if (match != null)
+                {
+                    model.Match = match;
+                    model.Tickets = AssignDataOnGroup(listTicket, match.HomeId, match.AwayId);
+                }
+
                 model.Result = result;
             }
             catch (Exception exception)

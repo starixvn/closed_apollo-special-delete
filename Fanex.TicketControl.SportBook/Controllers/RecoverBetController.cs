@@ -58,10 +58,8 @@ namespace Fanex.TicketControl.SportBook.Controllers
         [HttpPost]
         public JsonResult GetTicketRecover(GetRecoverBetCriteria criteria)
         {
-            var rs = new Result();
-
             var data = _serviceRecover.GetTicketRecover(criteria);
-            return data.Result.ErrorCode == 0 ? Json(data) : Json(rs);
+            return data.Result.ErrorCode == 0 ? Json(data) : Json(data.Result);
         }
 
         /// <summary>
