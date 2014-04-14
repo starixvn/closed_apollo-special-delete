@@ -90,9 +90,9 @@ namespace Fanex.TicketControl.SportBook.Criteria
 
         public string Errmsg { get; set; }
 
-        public int LiveHomeScore { get; set; }
+        public int? LiveHomeScore { get; set; }
 
-        public int LiveAwayScore { get; set; }
+        public int? LiveAwayScore { get; set; }
 
         public string IP
         {
