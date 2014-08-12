@@ -53,7 +53,7 @@ var validateData = {
         }
 
         //cs
-        var IsSelectedCS = helper.IsSelectedBettype(4) || helper.IsSelectedBettype(30);
+        var IsSelectedCS = NapTicketControl.Helper.IsSelectedBettype(4) || NapTicketControl.Helper.IsSelectedBettype(30);
         if (IsSelectedCS) {
             if (helper.GetBetteam430() == '') {
                 $('#msg').html(tooltip.show('chk-score-all', 'Please select a score for bettype: Correct score!.')).show();
@@ -62,7 +62,7 @@ var validateData = {
         }
 
         //htft
-        var IsSelectedHTFT = helper.IsSelectedBettype(16);
+        var IsSelectedHTFT = NapTicketControl.Helper.IsSelectedBettype(16);
         if (IsSelectedHTFT) {
             if (helper.GetBetteam16() == '') {
                 $('#msg').html(tooltip.show('chk-htft-all', 'Please select a betteam for bettype: HT/FT!.')).show();
@@ -71,21 +71,25 @@ var validateData = {
         }
 
         //tg
-        var IsSelectedTG = helper.IsSelectedBettype(6);
+        var IsSelectedTG = NapTicketControl.Helper.IsSelectedBettype(6);
         if (IsSelectedTG) {
-            if (helper.GetBetteam6() == '') {
+            if (NapTicketControl.Helper.GetBetteam6() == '') {
                 $('#msg').html(tooltip.show('chk-tg-all', 'Please select a goal for bettype: Total Goal!.')).show();
                 return false;
             }
         }
 
         //fg/lg
-        var IsSelectedGFLG = helper.IsSelectedBettype(14);
+        var IsSelectedGFLG = NapTicketControl.Helper.IsSelectedBettype(14);
         if (IsSelectedGFLG) {
-            if (helper.GetBetteam14() == '') {
+            if (NapTicketControl.Helper.GetBetteam14() == '') {
                 $('#msg').html(tooltip.show('chk-flg-all', 'Please select a goal for bettype: First Goal/Last Goal!.')).show();
                 return false;
             }
+        }
+
+        if (!NapTicketControl.Helper.checkNew2BettypeBeforeGetData()) {
+            return false;
         }
 
         if (helper.GetBettypesChecked() == '') {

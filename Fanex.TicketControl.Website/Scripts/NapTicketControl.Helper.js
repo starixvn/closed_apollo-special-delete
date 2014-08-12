@@ -360,12 +360,10 @@ NapTicketControl.Helper = (function ($) {
 
         RederNumberItem: function (value, isNumber) {
             var item = "";
-            if(isNumber && value.length<20)
-            {
+            if (isNumber && value.length < 20) {
                 item += "<div class='item-number'><span class='value-number'>";
             }
-            else
-            {
+            else {
                 item += "<div class='item-number'><span class='value-number-invalid'>";
             }
             item += value;
@@ -391,7 +389,7 @@ NapTicketControl.Helper = (function ($) {
         },
 
         InitNumberGroup: function () {
-             $(".text-number").keydown(NapTicketControl.Helper.ChangeNumberItem
+            $(".text-number").keydown(NapTicketControl.Helper.ChangeNumberItem
             ).ForceIntegerOnly();
 
             $(".number-group").mouseup(function () {
@@ -423,5 +421,258 @@ NapTicketControl.Helper = (function ($) {
                 }, 0);
             });
         },
+
+        IsSelectedBettype: function (bettypeId) {
+            var checkedVals = $('.chkbettype:checkbox:checked').map(function () {
+                return this.value;
+            }).get();
+
+            var isSelected = false;
+
+            for (var i = 0; i < checkedVals.length; i++) {
+                if (checkedVals[i] == bettypeId) {
+                    isSelected = true;
+                    break;
+                }
+            }
+
+            return isSelected;
+        },
+
+        initAdvancedModeTotalGoal: function () {
+            $('body').delegate('#chk-tg-all', 'click', function () {
+                if (NapTicketControl.Helper.IsSelectedBettype(6)) {
+                    NapTicketControl.Helper.setStatusAllAdvanceTG(this.checked, true);
+                }
+                else {
+                    NapTicketControl.Helper.setStatusAllAdvanceTG(false, false);
+                }
+
+                if (NapTicketControl.Helper.IsSelectedBettype(126) ||
+                    NapTicketControl.Helper.IsSelectedBettype(131) ||
+                    NapTicketControl.Helper.IsSelectedBettype(132)) {
+                    NapTicketControl.Helper.setStatusAllAdvance1HTG(this.checked, true);
+                }
+                else {
+                    NapTicketControl.Helper.setStatusAllAdvance1HTG(false, false);
+                }
+
+                NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(this.checked, true);
+            });
+
+            $('body').delegate('.chk-tg', 'click', function () {
+                NapTicketControl.Helper.eventSubAdvanceTG();
+            });
+
+            $('body').delegate('.chk-1h-tg', 'click', function () {
+                NapTicketControl.Helper.eventSubAdvanceTG();
+            });
+
+            $('body').delegate('.chk-ft-tg', 'click', function () {
+                NapTicketControl.Helper.eventSubAdvanceTG();
+            });
+        },
+
+        setStatusAllAdvanceTG: function (isChecked, isEnable) {
+            if (isChecked) {
+                $('.chk-ft-tg').attr('checked', 'checked');
+            } else {
+                $('.chk-ft-tg').removeAttr('checked');
+            }
+
+            $('.chk-ft-tg').attr('disabled', !isEnable);
+        },
+
+        setStatusAllAdvance1HTG: function (isChecked, isEnable) {
+            if (isChecked) {
+                $('.chk-1h-tg').attr('checked', 'checked');
+            } else {
+                $('.chk-1h-tg').removeAttr('checked');
+            }
+
+            $('.chk-1h-tg').attr('disabled', !isEnable);
+        },
+
+        setStatusAllAdvance1HTGAndTG: function (isChecked, isEnable) {
+            if (isChecked) {
+                $('.chk-tg').attr('checked', 'checked');
+            } else {
+                $('.chk-tg').removeAttr('checked');
+            }
+
+            $('.chk-tg').attr('disabled', !isEnable);
+        },
+
+        eventSubAdvanceTG: function () {
+            var selectedItems = $('.chk-tg:input:checked').not('#chk-tg-all').length;
+            var totalItems = 2;
+
+            if (NapTicketControl.Helper.IsSelectedBettype(6)) {
+                totalItems += 2;
+                selectedItems += $('.chk-ft-tg:input:checked').length;
+            }
+
+            if (NapTicketControl.Helper.IsSelectedBettype(126) ||
+                NapTicketControl.Helper.IsSelectedBettype(131) ||
+                NapTicketControl.Helper.IsSelectedBettype(132)) {
+                totalItems += 1;
+                selectedItems += $('.chk-1h-tg:input:checked').length;
+            }
+
+            if (selectedItems === totalItems) {
+                $('#chk-tg-all').attr('checked', 'checked');
+            } else {
+                $('#chk-tg-all').removeAttr('checked');
+            }
+        },
+
+        setAdvancedModeTotalGoal: function () {
+            var IsSelectedTotalGoal = NapTicketControl.Helper.IsSelectedBettype(6);
+            var IsSelected1HTotalGoal = NapTicketControl.Helper.IsSelectedBettype(126);
+
+            $('#chk-bettype-5').click(function () {
+                NapTicketControl.Helper.IsClickTotalGoal = true;
+                NapTicketControl.Helper.IsClick1HTotalGoal = false;
+            });
+
+            $('#chk-bettype-26').click(function () {
+                NapTicketControl.Helper.IsClickTotalGoal = false;
+                NapTicketControl.Helper.IsClick1HTotalGoal = true;
+            });
+
+            $('#chk-bettype-31').click(function () {
+                NapTicketControl.Helper.IsClickTotalGoal = false;
+                NapTicketControl.Helper.IsClick1HTotalGoal = true;
+            });
+
+            $('#chk-bettype-32').click(function () {
+                NapTicketControl.Helper.IsClickTotalGoal = false;
+                NapTicketControl.Helper.IsClick1HTotalGoal = true;
+            });
+
+            if (NapTicketControl.Helper.GetBetteamFTTG() !== '' || NapTicketControl.Helper.GetBetteamTG() !== '') {
+                if (NapTicketControl.Helper.IsClickTotalGoal) {
+                    NapTicketControl.Helper.setStatusAllAdvanceTG(IsSelectedTotalGoal, IsSelectedTotalGoal);
+                }
+
+                if (NapTicketControl.Helper.IsClick1HTotalGoal) {
+                    NapTicketControl.Helper.setStatusAllAdvance1HTG(IsSelected1HTotalGoal, IsSelected1HTotalGoal);
+                }
+            }
+            else {
+                NapTicketControl.Helper.setStatusAllAdvanceTG(IsSelectedTotalGoal, IsSelectedTotalGoal);
+                NapTicketControl.Helper.setStatusAllAdvance1HTG(IsSelected1HTotalGoal, IsSelected1HTotalGoal);
+                NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(true, true);
+            }
+        },
+
+        GetBetteam6: function () {
+            //Total Goal, Liveindicator = 0
+            var checkedVals = '';
+            var allChecked = [];
+            var isCheckAll = $('#chk-tg-all').is(':checked');
+
+            if (isCheckAll) {
+                return "All";
+            }
+
+            var checkedTG = $('.chk-tg:checkbox:checked').not('#chk-tg-all').map(function () {
+                return this.value;
+            }).get().join('^');
+            var checkedFTTG = $('.chk-ft-tg:checkbox:checked').not('#chk-tg-all').map(function () {
+                return this.value;
+            }).get().join('^');
+            var checked1HTG = $('.chk-1h-tg:checkbox:checked').not('#chk-tg-all').map(function () {
+                return this.value;
+            }).get().join('^');
+
+            if (checkedTG !== '') {
+                allChecked.push(checkedTG);
+            }
+
+            if (checkedFTTG !== '') {
+                allChecked.push(checkedFTTG);
+            }
+
+            if (checked1HTG !== '') {
+                allChecked.push(checked1HTG);
+            }
+
+            checkedVals = allChecked.join('^');
+
+            return checkedVals;
+        },
+
+        GetBetteamFTTG: function () {
+            var checkedVals = $('.chk-ft-tg:checkbox:checked').not('#chk-tg-all').map(function () {
+                return this.value;
+            }).get().join('^');
+
+            return checkedVals;
+        },
+
+        GetBetteamTG: function () {
+            var checkedVals = $('.chk-tg:checkbox:checked').not('#chk-tg-all').map(function () {
+                return this.value;
+            }).get().join('^');
+
+            return checkedVals;
+        },
+
+        GetBetteam1HTG: function () {
+            var checkedVals = '';
+            var allChecked = [];
+
+            var checkedTG = $('.chk-tg:checkbox:checked').not('#chk-tg-all').map(function () {
+                return this.value;
+            }).get().join('^');
+
+            var checked1HTG = $('.chk-1h-tg:checkbox:checked').not('#chk-tg-all').map(function () {
+                return this.value;
+            }).get().join('^');
+
+            if (checkedTG !== '') {
+                allChecked.push(checkedTG);
+            }
+
+            if (checked1HTG !== '') {
+                allChecked.push(checked1HTG);
+            }
+
+            checkedVals = allChecked.join('^');
+
+            return checkedVals;
+        },
+
+        GetBetteam14: function () {
+            //First Goal/Last Goal, Liveindicator = 0
+
+            var checkedVals = '';
+            checkedVals = $('.chk-flg:checkbox:checked').not('#chk-flg-all').map(function () {
+                return this.value;
+            }).get().join('^');
+
+            return checkedVals;
+        },
+
+        checkNew2BettypeBeforeGetData: function () {
+            var IsSelected1HFGLG = NapTicketControl.Helper.IsSelectedBettype(127);
+            if (IsSelected1HFGLG) {
+                if (NapTicketControl.Helper.GetBetteam14() === '') {
+                    $('#msg').html(tooltip.show('chk-flg-all', 'Please select a goal for bettype: 1H First Goal/Last Goal!.')).show();
+                    return false;
+                }
+            }
+
+            var IsSelected1HTG = NapTicketControl.Helper.IsSelectedBettype(126);
+            if (IsSelected1HTG) {
+                if (NapTicketControl.Helper.GetBetteam1HTG() === '') {
+                    $('#msg').html(tooltip.show('chk-tg-all', 'Please select a goal for bettype: 1H Total Goal!.')).show();
+                    return false;
+                }
+            }
+
+            return true;
+        }
     };
 } (jQuery));

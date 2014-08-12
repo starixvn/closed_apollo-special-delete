@@ -25,8 +25,8 @@ var parlayDelete = {
             Betteam1378: helper.GetBetteam1378(),
             Betteam515: helper.GetBetteam515(),
             Betteam430: helper.GetBetteam430(),
-            Betteam6: helper.GetBetteam6(),
-            Betteam14: helper.GetBetteam14(),
+            Betteam6: NapTicketControl.Helper.GetBetteam6(),
+            Betteam14: NapTicketControl.Helper.GetBetteam14(),
             Betteam16: helper.GetBetteam16()
          };
 
@@ -166,8 +166,8 @@ var parlayDelete = {
             Betteam1378: helper.GetBetteam1378(),
             Betteam515: helper.GetBetteam515(),
             Betteam430: helper.GetBetteam430(),
-            Betteam6: helper.GetBetteam6(),
-            Betteam14: helper.GetBetteam14(),
+            Betteam6: NapTicketControl.Helper.GetBetteam6(),
+            Betteam14: NapTicketControl.Helper.GetBetteam14(),
             Betteam16: helper.GetBetteam16(),
             TransIds: helper.getSubTicketsChecked(),
             UserPwd: $('#password').val(),
@@ -288,6 +288,8 @@ VoidEarlyKOBet.prototype.Init = function () {
         NapTicketControl.Helper.ToggleFilterBar(this);
     });
 
+    NapTicketControl.Helper.initAdvancedModeTotalGoal();
+
     // check all bettypes
     $('body').delegate('#chkallbettype', 'click', function (e) {
         e.stopPropagation();
@@ -298,7 +300,9 @@ VoidEarlyKOBet.prototype.Init = function () {
         } else {
             $('.chkbettype').removeAttr('checked');
             helper.setStatusAllAdvanceCS(false, false);
-            helper.setStatusAllAdvanceTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvanceTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(false, false);
             helper.setStatusAllAdvanceHDP(false);
             helper.setStatusAllAdvance1X2(false);
             helper.setStatusAllAdvanceHTFT(false, false);
@@ -327,16 +331,6 @@ VoidEarlyKOBet.prototype.Init = function () {
     //Correct Scores uncheck any item
     $('body').delegate('.chk-score', 'click', function () {
         helper.eventSubAdvanceCS();
-    });
-
-     //TG check all
-    $('body').delegate('#chk-tg-all', 'click', function () {
-        helper.setStatusAllAdvanceTG(this.checked, true);
-    });
-
-     //TG uncheck any item
-    $('body').delegate('.chk-tg', 'click', function () {
-        helper.eventSubAdvanceTG();
     });
 
      //HTFT check all
