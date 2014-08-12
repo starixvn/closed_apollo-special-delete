@@ -1,4 +1,8 @@
-﻿var helper = {
+﻿/* exported helper*/
+/*global NapTicketControl*/
+"use strict";
+
+var helper = {
     setStatusAllBettype: function (isChecked) {
         if (isChecked) {
             $('.chkbettype').attr('checked', 'checked')

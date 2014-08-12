@@ -1,4 +1,5 @@
-/* File Created: March 12, 2013 */
+/*global NapTicketControl, ContextMenu, validateData, Message*/
+"use strict";
 
 $(function () {
     outright.init();

@@ -1,4 +1,6 @@
-/* File Created: March 8, 2013 */
+/*global NapTicketControl, tooltip, ContextMenu*/
+
+"use strict";
 
 $(function () {
     recoverBet.init();

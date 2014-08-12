@@ -1,4 +1,5 @@
-﻿/* File Created: February 6, 2013 */
+﻿/*global VoidEarlyKickOffBet*/
+"use strict";
 
 $(function () {
     var voidEarlyKOBetManager = new VoidEarlyKOBetManager();

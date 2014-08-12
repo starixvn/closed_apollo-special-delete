@@ -1,4 +1,7 @@
-/* File Created: February 5, 2013 */
+/*global NapTicketControl, tooltip, ContextMenu, dateFormat, validateData, Message, helper*/
+
+"use strict";
+
 var parlayDelete = {
     param:{
         MatchId: ''

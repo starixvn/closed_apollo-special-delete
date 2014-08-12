@@ -1,4 +1,6 @@
-﻿/* File Created: March 6, 2013 */
+﻿/*global tooltip*/
+"use strict"
+
 var validateData = {
     checkParamBeforeGetData: function () {
         $('#msg').hide();

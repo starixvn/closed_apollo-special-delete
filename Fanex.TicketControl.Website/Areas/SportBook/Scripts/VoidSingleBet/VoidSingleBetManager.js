@@ -1,4 +1,5 @@
-﻿/* File Created: February 6, 2013 */
+﻿/*global DelSingleTicket*/
+"use strict";
 
 $(function () {
     var delSingleTicketManager = new DelSingleTicketManager();

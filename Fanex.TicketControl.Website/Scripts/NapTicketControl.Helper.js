@@ -1,4 +1,7 @@
-﻿if (NapTicketControl === undefined) {
+﻿/*global NapTicketControl: true, ContextMenu, tooltip, helper*/
+"use strict";
+
+if (NapTicketControl === undefined) {
     NapTicketControl = {};
 }
 
@@ -471,6 +474,10 @@ NapTicketControl.Helper = (function ($) {
             $('body').delegate('.chk-ft-tg', 'click', function () {
                 NapTicketControl.Helper.eventSubAdvanceTG();
             });
+
+            NapTicketControl.Helper.setStatusAllAdvance1HTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvanceTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(false, false);
         },
 
         setStatusAllAdvanceTG: function (isChecked, isEnable) {
@@ -570,11 +577,7 @@ NapTicketControl.Helper = (function ($) {
             //Total Goal, Liveindicator = 0
             var checkedVals = '';
             var allChecked = [];
-            var isCheckAll = $('#chk-tg-all').is(':checked');
-
-            if (isCheckAll) {
-                return "All";
-            }
+            var isCheckAll = false;
 
             var checkedTG = $('.chk-tg:checkbox:checked').not('#chk-tg-all').map(function () {
                 return this.value;
@@ -598,7 +601,15 @@ NapTicketControl.Helper = (function ($) {
                 allChecked.push(checked1HTG);
             }
 
-            checkedVals = allChecked.join('^');
+            var totalChecked = $('.chk-tg:checkbox:checked').not('#chk-tg-all').length +
+                                $('.chk-ft-tg:checkbox:checked').not('#chk-tg-all').length +
+                                $('.chk-1h-tg:checkbox:checked').not('#chk-tg-all').length;
+
+            if (totalChecked === 5) {
+                isCheckAll = true;
+            }
+
+            checkedVals = isCheckAll ? "All" : allChecked.join('^');
 
             return checkedVals;
         },

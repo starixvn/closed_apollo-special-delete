@@ -1,4 +1,7 @@
-/* File Created: February 5, 2013 */
+/*jshint loopfunc: true */
+/*global NapTicketControl, tooltip, dateFormat, numeral*/
+"use strict";
+
 function TicketListing() {
     this.DOMElement =
     {
@@ -21,7 +24,7 @@ function TicketListing() {
     this.BetListDataRequest = null;
     this.ExportDataRequest = null;
     this.MatchInfo = null;
-};
+}
 
 TicketListing.prototype.Mode = {
     Sportsbook: 0,
@@ -52,7 +55,7 @@ TicketListing.prototype.CacheDOMElement = function () {
     self.DOMElement.$matchInfoContainer = $('#match-info-container');
     self.DOMElement.$ticketsContainer = $('#tickets-container');
     self.DOMElement.$betlistContainer = $('#betlist-container');
-}
+};
 
 TicketListing.prototype.Init = function () {
     jQuery("#TicketListingForm").validationEngine();
@@ -146,7 +149,7 @@ TicketListing.prototype.Init = function () {
     // check all bettypes
     $('body').delegate('#chkallbettype', 'click', function () {
         if ($('#chkallbettype').prop('checked')) {
-            $('.chkbettype').attr('checked', 'checked')
+            $('.chkbettype').attr('checked', 'checked');
         } else {
             $('.chkbettype').removeAttr('checked');
         }
@@ -241,7 +244,6 @@ TicketListing.prototype.Init = function () {
 
     // handle request  to get ticket detail
     $('body').delegate('.lnk-totaltrans', 'click', function () {
-        var $this = $(this);
         var bettypeId = $(this).attr('bettypeid');
         var bettypeName = $(this).attr('bettypename');
         var liveIndicator = $(this).attr('liveindicator');
@@ -280,7 +282,6 @@ TicketListing.prototype.Init = function () {
     });
 
     $('body').delegate('.lnk-excel', 'click', function () {
-        var $this = $(this);
         var bettypeId = $(this).attr('bettypeid');
         var bettypeName = $(this).attr('bettypename');
         var liveIndicator = $(this).attr('liveindicator');
@@ -329,7 +330,7 @@ TicketListing.prototype.HideContainers = function () {
     self.DOMElement.$matchInfoContainer.parent().addClass('display-none');
     self.DOMElement.$ticketsContainer.parent().addClass('display-none');
     self.DOMElement.$betlistContainer.parent().addClass('display-none');
-}
+};
 
 TicketListing.prototype.ResetOptionFilter = function () {
     $('#LiveHomeScore').val('');
@@ -337,11 +338,11 @@ TicketListing.prototype.ResetOptionFilter = function () {
     $('.chkTransDateRange').removeAttr('checked');
     $('#FromTransDate').val('');
     $('#ToTransDate').val('');
-}
+};
 
 TicketListing.prototype.CollectSelectedProduct = function () {
     return $('input[name=Product]:checked').val();
-}
+};
 
 TicketListing.prototype.CollectSelectedBettypes = function () {
     var bettypes = '';
@@ -351,17 +352,17 @@ TicketListing.prototype.CollectSelectedBettypes = function () {
     });
     //    console.log(bettypes);
     return bettypes.substring(0, bettypes.length - 1);
-}
+};
 
 TicketListing.prototype.CollectSelectedLiveBettypes = function () {
     var livebettypes = '';
 
     $('input[name=LiveBetTypes]:checked').each(function () {
         livebettypes += $(this).val() + ',';
-    })
+    });
     //    console.log(livebettypes);
     return livebettypes.substring(0, livebettypes.length - 1);
-}
+};
 
 TicketListing.prototype.SetupCalendar = function (strdatetime, txtdate) {
     $(txtdate).datetimepicker({
@@ -377,7 +378,7 @@ TicketListing.prototype.SetupCalendar = function (strdatetime, txtdate) {
     if (strdatetime != null && strdatetime != "") {
         $(txtdate).val(strdatetime).datetimepicker('setDate', (new Date(strdatetime)));
     }
-}
+};
 
 TicketListing.prototype.RenderMatchInfo = function (matchInfo) {
     var self = this;
@@ -422,7 +423,6 @@ TicketListing.prototype.RenderTickets = function (tickets) {
 };
 
 TicketListing.prototype.GenerateTicketsData = function (tickets) {
-    var self = this;
     var rows = [];
 
     $.each(tickets, function (idx, ticket) {
@@ -440,7 +440,7 @@ TicketListing.prototype.GenerateTicketsData = function (tickets) {
 
         currentTicket.Columns[2].CustomCellRender = function (cell) {
             return TicketListing.prototype.RenderExportCell(cell);
-        }
+        };
 
         // add additional attributes
         currentTicket.Columns[1].CustomAttr = 'bettypeID="' + ticket.BetTypeID + '"';
@@ -455,14 +455,14 @@ TicketListing.prototype.RenderTotalTransCell = function (cell) {
     + 'bettypeID="' + cell.Value.BetTypeID + '" bettypeName="' + cell.Value.BetTypeName
     + '" liveIndicator="' + cell.Value.LiveIndicator + '" >'
     + cell.Value.TotalTrans + '</a>';
-}
+};
 
 TicketListing.prototype.RenderExportCell = function (cell) {
     return '<a href="javascript:;" class="lnk-excel" '
     + 'bettypeID="' + cell.Value.BetTypeID + '" bettypeName="' + cell.Value.BetTypeName
     + '" liveIndicator="' + cell.Value.LiveIndicator + '" >'
     + '<i class="icon-excel"></i></a>';
-}
+};
 
 // Detail Betlist for TicketListing
 TicketListing.prototype.RequestBetList = function (dataReq) {
@@ -489,7 +489,7 @@ TicketListing.prototype.RequestBetList = function (dataReq) {
             NapTicketControl.enableInput();
         }
     });
-}
+};
 
 TicketListing.prototype.RenderTicketListingBetlist = function (betlist, matchId, bettypeName, pageIndex, pageSize) {
     var self = this;
@@ -538,10 +538,9 @@ TicketListing.prototype.RenderTicketListingBetlist = function (betlist, matchId,
     };
 
     self.DOMElement.$betlistContainer.fanexGrid(gridOptions);
-}
+};
 
 TicketListing.prototype.GenerateBetListData = function (betlist) {
-    var self = this;
     var rows = [];
 
     $.each(betlist, function (idx, bet) {
@@ -600,7 +599,7 @@ TicketListing.prototype.RenderChoiceCell = function (cell) {
     }
 
     return html;
-}
+};
 
 TicketListing.prototype.RenderWinlossCell = function (cell) {
     var html = '';
@@ -616,7 +615,7 @@ TicketListing.prototype.RenderWinlossCell = function (cell) {
     }
 
     return html;
-}
+};
 
 TicketListing.prototype.RenderBetTypeCell = function (cell) {
     var html = '';
@@ -632,16 +631,16 @@ TicketListing.prototype.RenderBetTypeCell = function (cell) {
     }
 
     return html;
-}
+};
 
 TicketListing.prototype.RenderSACell = function (cell) {
     var html = '';
     if (cell.Value === true) {
-        html += '<span class="icon-tick"></span>'
+        html += '<span class="icon-tick"></span>';
     }
 
     return html;
-}
+};
 
 TicketListing.prototype.RenderPagingEvent = function (pageIndex, pageSize, jq) {
     var self = this;
@@ -660,12 +659,12 @@ TicketListing.prototype.RenderPagingEvent = function (pageIndex, pageSize, jq) {
     }
 
     return false;
-}
+};
 
 // Export
 TicketListing.prototype.ExportReport = function (dataReq) {
     NapTicketControl.downloadFile(window.rootUrl + "Misc/TicketListing/ExportTicketListingBetList", dataReq);
-}
+};
 
 TicketListing.prototype.ToggleFilterBar = function (self) {
     // here, self is .toggle-filter-bar DOM element
@@ -682,4 +681,4 @@ TicketListing.prototype.ToggleFilterBar = function (self) {
         $('.filter-bar-inner').show();
         $(self).attr('title', 'Collapse filter');
     }
-}
+};

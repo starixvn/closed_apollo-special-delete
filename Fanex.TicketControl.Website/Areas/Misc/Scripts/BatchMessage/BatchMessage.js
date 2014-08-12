@@ -1,4 +1,7 @@
-﻿/* File Created: March 27, 2013 */
+﻿/*global NapTicketControl, tooltip, Message*/
+
+"use strict";
+
 $(function () {
     batchMsg.init();
 });

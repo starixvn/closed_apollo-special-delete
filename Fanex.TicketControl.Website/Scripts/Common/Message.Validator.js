@@ -1,9 +1,11 @@
-﻿if (Message === undefined) {
+﻿/*global Message, tooltip*/
+"use strict"
+
+if (Message === undefined) {
     Message = {};
 }
 
 Message.Validator = (function ($) {
-
     return {
         validateMessageConstraints: function () {
             if ($("#msg-en").val() == "") {

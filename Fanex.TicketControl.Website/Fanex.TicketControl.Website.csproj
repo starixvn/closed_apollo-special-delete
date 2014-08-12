@@ -52,6 +52,10 @@
     <Reference Include="dotless.Core">
       <HintPath>..\_Dependency\FanexLibs\dotless.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.Core, Version=2.0.3.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.BetList.Core.2.0.3.3\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\_Dependency\FanexLibs\Fanex.Common.dll</HintPath>
     </Reference>
@@ -70,6 +74,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_Dependency\FanexLibs\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\NPOI.2.0.6\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -85,6 +95,19 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\_Dependency\FanexLibs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RemotingRef.1.0.0.1\lib\net40\RemotingRef.dll</HintPath>
+    </Reference>
+    <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Core.Common">
+      <HintPath>..\packages\Sunplus.Core.Common.1.1.4505.19054\lib\net40\Sunplus.Core.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -117,6 +140,9 @@
     <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="TplCore, Version=1.0.4694.29951, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TplCore.1.0.4694.29951\lib\net40\TplCore.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -228,7 +254,6 @@
     <Content Include="Scripts\Common\ValidateMessage.js" />
     <Content Include="Scripts\NapTicketControl.Helper.js" />
     <Content Include="Scripts\NapTicketControl.js" />
-    <Content Include="Scripts\NapTicketControl.Validator.js" />
     <Content Include="Scripts\_Libs\BlockUI\jquery.blockUI.1.33.js" />
     <Content Include="Scripts\_Libs\BlockUI\jquery.blockUI.1.33.min.js" />
     <Content Include="Scripts\_Libs\Bootstrap\bootstrap-affix.js" />

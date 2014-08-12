@@ -1,4 +1,6 @@
-/* File Created: March 7, 2013 */
+/* exported showMP, showCombMP*/
+/*global NapTicketControl*/
+"use strict";
 
 function showMP(subTransId, refNo) {
     subTicketMP.getSubTicketMP(subTransId, refNo);

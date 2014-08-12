@@ -1,4 +1,7 @@
-﻿/* File Created: March 6, 2013 */
+﻿/*exported validateData*/
+/*global NapTicketControl, tooltip, Message, helper*/
+"use strict";
+
 var validateData = {
     checkParamBeforeGetData: function () {
         $('#msg').hide();
