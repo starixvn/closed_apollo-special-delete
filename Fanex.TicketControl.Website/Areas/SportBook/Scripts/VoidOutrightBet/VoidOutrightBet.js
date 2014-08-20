@@ -29,7 +29,9 @@ var helper = {
     getSubTicketsChecked: function () {
         var checkedVals = '';
         checkedVals = $('.chk-ticket:checkbox:checked').not('#chk-ticket-all').map(function () {
-            return this.value;
+            if (!isNaN(parseFloat(this.value))) {
+                return this.value;
+            }
         }).get().join(',');
 
         return checkedVals;
@@ -199,7 +201,7 @@ var outright = {
             var currentRow = list[index];
             rows.push({
                 Columns: [
-                    { Name: "CustomAdd", Value: currentRow.BetId },
+                    { Name: "CustomAdd", Value: NapTicketControl.Helper.isSettledTicket(currentRow.Status) ? "settled" : currentRow.BetId },
                     { Name: "No", Value: currentRow.No },
                     { Name: "BetId", Value: currentRow.BetId },
                     { Name: "Player", Value: currentRow.Player },
@@ -250,7 +252,13 @@ var outright = {
     },
 
     optionCustomRender: function (cell) {
-        return "<input class='chk-ticket' value='" + cell.Value + "' type='checkbox' checked='checked'/>";
+        var isDisabled = cell.Value.toString() === "settled" ? true : false;
+        var disabled = isDisabled ? "disabled=disabled" : "";
+        var checkBoxItem = "<input class='chk-ticket' value='" + cell.Value + "' type='checkbox' " + disabled;
+
+        checkBoxItem += !isDisabled ? " checked='checked'>" : ">";
+
+        return checkBoxItem;
     },
 
     voidOutrightBet: function () {

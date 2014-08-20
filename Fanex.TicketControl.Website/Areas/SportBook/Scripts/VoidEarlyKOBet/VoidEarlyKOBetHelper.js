@@ -202,7 +202,9 @@ var helper = {
     getSubTicketsChecked: function () {
         var checkedVals = '';
         checkedVals = $('.chk-ticket:checkbox:checked').not('#chk-ticket-all').map(function () {
-            return this.value;
+            if (!isNaN(parseFloat(this.value))) {
+                return this.value;
+            }
         }).get().join(',');
 
         return checkedVals;

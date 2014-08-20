@@ -684,6 +684,22 @@ NapTicketControl.Helper = (function ($) {
             }
 
             return true;
+        },
+
+        isSettledTicket: function (statusTicket) {
+            var result = false;
+            var status = statusTicket.toLowerCase();
+            switch (status) {
+                case 'won':
+                case 'lose':
+                case 'draw':
+                    result = true;
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
         }
     };
 } (jQuery));

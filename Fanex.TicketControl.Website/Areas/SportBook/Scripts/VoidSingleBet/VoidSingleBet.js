@@ -106,7 +106,7 @@ var singleDetete = {
             var currentRow = list[index];
             rows.push({
                 Columns: [
-                    { Name: "CustomAdd", Value: currentRow.BetId },
+                    { Name: "CustomAdd", Value: NapTicketControl.Helper.isSettledTicket(currentRow.Status) ? "settled" : currentRow.BetId },
                     { Name: "No", Value: currentRow.No },
                     { Name: "BetId", Value: currentRow.BetId },
                     { Name: "Player", Value: currentRow.Player },
@@ -163,7 +163,13 @@ var singleDetete = {
     },
 
     optionCustomRender: function (cell) {
-        return "<input class='chk-ticket' value='" + cell.Value + "' type='checkbox' checked='checked'/>";
+        var isDisabled = cell.Value.toString() === "settled" ? true : false;
+        var disabled = isDisabled ? "disabled=disabled" : "";
+        var checkBoxItem = "<input class='chk-ticket' value='" + cell.Value + "' type='checkbox' " + disabled;
+
+        checkBoxItem += !isDisabled ? " checked='checked'>" : ">";
+
+        return checkBoxItem;
     },
 
     voidSingleBet: function () {
