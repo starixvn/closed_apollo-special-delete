@@ -547,16 +547,6 @@ NapTicketControl.Helper = (function ($) {
                 NapTicketControl.Helper.IsClick1HTotalGoal = true;
             });
 
-            $('#chk-bettype-31').click(function () {
-                NapTicketControl.Helper.IsClickTotalGoal = false;
-                NapTicketControl.Helper.IsClick1HTotalGoal = true;
-            });
-
-            $('#chk-bettype-32').click(function () {
-                NapTicketControl.Helper.IsClickTotalGoal = false;
-                NapTicketControl.Helper.IsClick1HTotalGoal = true;
-            });
-
             if (NapTicketControl.Helper.GetBetteamFTTG() !== '' || NapTicketControl.Helper.GetBetteamTG() !== '') {
                 if (NapTicketControl.Helper.IsClickTotalGoal) {
                     NapTicketControl.Helper.setStatusAllAdvanceTG(IsSelectedTotalGoal, IsSelectedTotalGoal);
@@ -700,6 +690,30 @@ NapTicketControl.Helper = (function ($) {
             }
 
             return result;
+        },
+
+        getTicketEnable: function (list) {
+            if (list.length === 0) {
+                return false;
+            }
+
+            for (var index = 0; index < list.length; index++) {
+                var currentRow = list[index];
+                if (!NapTicketControl.Helper.isSettledTicket(currentRow.Status)) {
+                    return true;
+                }
+            };
+
+            return false;
+        },
+
+        renderCheckBoxAll: function (list) {
+            var isDisabled = !NapTicketControl.Helper.getTicketEnable(list) ? true : false;
+            var checkBoxAll = "<div class='option-all'><input class='option' id='chk-ticket-all' type='checkbox' ";
+
+            checkBoxAll += isDisabled ? "disabled=disabled /></div>" : "checked='checked' /></div>";
+
+            return checkBoxAll;
         }
     };
 } (jQuery));

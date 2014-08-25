@@ -53,7 +53,7 @@ var subTicketMP = {
             success: function (rs) {
                 var arrChoice = [];
                 for (var i = 0; i < rs.length; i++) {
-                    row = rs[i];
+                    var row = rs[i];
                     if (subTransId == row.SubTransId) {
                         arrChoice.push('<div class="line"><div class="selected">' + row.Choice + '</div></div>');
                     }

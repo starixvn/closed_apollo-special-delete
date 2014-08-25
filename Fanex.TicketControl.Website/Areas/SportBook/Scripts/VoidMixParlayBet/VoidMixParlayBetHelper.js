@@ -303,6 +303,11 @@ var helper = {
         var IsSelectedTG = NapTicketControl.Helper.IsSelectedBettype(6) ||
                             NapTicketControl.Helper.IsSelectedBettype(126);
         if (IsSelectedTG) {
+            $('#chk-bettype-24').click(function () {
+                NapTicketControl.Helper.IsClickTotalGoal = false;
+                NapTicketControl.Helper.IsClick1HTotalGoal = true;
+            });
+
             NapTicketControl.Helper.setAdvancedModeTotalGoal();
         }
         else {

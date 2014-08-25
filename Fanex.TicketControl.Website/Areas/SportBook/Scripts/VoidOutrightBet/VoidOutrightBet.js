@@ -218,7 +218,7 @@ var outright = {
 
         var gridOptions = {
             columns: [
-                { HeaderText: "<div class='option-all'><input class='option' id='chk-ticket-all' type='checkbox' checked='checked'/></div>", Name: "CustomAdd", Width: 30, HeaderAlign: "center", CellAlign: "center", CustomCellRender: outright.optionCustomRender },
+                { HeaderText: NapTicketControl.Helper.renderCheckBoxAll(list), Name: "CustomAdd", Width: 30, HeaderAlign: "center", CellAlign: "center", CustomCellRender: outright.optionCustomRender },
                 { HeaderText: "No", Name: "No", Width: 20, HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "BetID", Name: "BetId", Width: 100, HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "Member", Name: "Player", Width: 165, HeaderAlign: "center", CellAlign: "left" },

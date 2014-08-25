@@ -126,7 +126,7 @@ var singleDetete = {
 
         var gridOptions = {
             columns: [
-                { HeaderText: "<div class='option-all'><input class='option' id='chk-ticket-all' type='checkbox' checked='checked'/></div>", Name: "CustomAdd", Width: 30, HeaderAlign: "center", CellAlign: "center", CustomCellRender: singleDetete.optionCustomRender },
+                { HeaderText: NapTicketControl.Helper.renderCheckBoxAll(list), Name: "CustomAdd", Width: 30, HeaderAlign: "center", CellAlign: "center", CustomCellRender: singleDetete.optionCustomRender },
                 { HeaderText: "No", Name: "No", Width: 30, HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "BetID", Name: "BetId", Width: 98, HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "Member", Name: "Player", Width: 160, HeaderAlign: "center", CellAlign: "left" },

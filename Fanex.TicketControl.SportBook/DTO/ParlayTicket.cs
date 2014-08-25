@@ -17,5 +17,7 @@ namespace Fanex.TicketControl.SportBook.DTO
         public bool IsDelete { get; set; }
 
         public long SubTransId { get; set; }
+
+        public string ChoiceStatus { get; set; }
     }
 }

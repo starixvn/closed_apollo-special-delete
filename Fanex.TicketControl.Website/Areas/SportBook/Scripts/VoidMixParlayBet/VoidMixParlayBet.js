@@ -2,24 +2,24 @@
 "use strict";
 
 var parlayDelete = {
-    param:{
+    param: {
         MatchId: ''
     },
 
-    search: function(){
+    search: function () {
         $('#msg-box').hide();
         $('#msg').hide();
 
         //Load Match Info
-        if(validateData.checkParamBeforeGetData()){
+        if (validateData.checkParamBeforeGetData()) {
             parlayDelete.getSingleBet();
         }
     },
 
-    getSingleBet: function (){
-         var param = {
+    getSingleBet: function () {
+        var param = {
             MatchId: $('#txtMatchId').val(),
-            Hdp: $('#hdp').val() == '' ? '9999' :  $('#hdp').val(),
+            Hdp: $('#hdp').val() == '' ? '9999' : $('#hdp').val(),
             Type: $('#EventType').val(),
             LiveHomeScore: helper.GetLiveScore().LiveHomeScore,
             LiveAwayScore: helper.GetLiveScore().LiveAwayScore,
@@ -33,41 +33,40 @@ var parlayDelete = {
             Betteam6: NapTicketControl.Helper.GetBetteam6(),
             Betteam14: NapTicketControl.Helper.GetBetteam14(),
             Betteam16: helper.GetBetteam16()
-         };
+        };
 
-         $.ajax({
-                type: "POST",
-                url: window.rootUrl + "SportBook/VoidMixParlayBet/GetParlayBet",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify(param),
-                beforeSend: function () {
-                    NapTicketControl.disableInput();
-                },
-                success: function (rs) {
-                    // No permission.
-                    if (rs.Result.ErrorCode == 403) {
-                        NapTicketControl.Helper.showMsgBox(NapTicketControl.Helper.authorizedMsg);
-                    } else {
-                        //render match info
-                        parlayDelete.loadMatchInfo(rs.Match) ;
-                        parlayDelete.loadSingleTicket(rs.Tickets);
-                        Message.Helper.clearMsgContent();
-                    }
-                },
-                error: function (e) {},
-                complete: function (e) {
-                    if(e.status == 403){
-                        NapTicketControl.Helper.showMsgBox(NapTicketControl.Helper.authorizedMsg);
-                    }
-                    NapTicketControl.enableInput();
+        $.ajax({
+            type: "POST",
+            url: window.rootUrl + "SportBook/VoidMixParlayBet/GetParlayBet",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(param),
+            beforeSend: function () {
+                NapTicketControl.disableInput();
+            },
+            success: function (rs) {
+                // No permission.
+                if (rs.Result.ErrorCode == 403) {
+                    NapTicketControl.Helper.showMsgBox(NapTicketControl.Helper.authorizedMsg);
+                } else {
+                    //render match info
+                    parlayDelete.loadMatchInfo(rs.Match);
+                    parlayDelete.loadSingleTicket(rs.Tickets);
+                    Message.Helper.clearMsgContent();
                 }
-            });
+            },
+            error: function (e) { },
+            complete: function (e) {
+                if (e.status == 403) {
+                    NapTicketControl.Helper.showMsgBox(NapTicketControl.Helper.authorizedMsg);
+                }
+                NapTicketControl.enableInput();
+            }
+        });
     },
 
-    loadMatchInfo: function(matchInfo){
-        if(matchInfo == null)
-        {
+    loadMatchInfo: function (matchInfo) {
+        if (matchInfo == null) {
             $('#matchInfo').hide();
             return;
         }
@@ -75,10 +74,11 @@ var parlayDelete = {
 
         var rows = [];
         rows.push({
-        Columns: [{ Name: "code", Value: matchInfo.MatchCode, CssClass: 'bold' },
-            { Name: "matchEvent", Value: (matchInfo.HomeName + ' -vs- ' + matchInfo.AwayName), CssClass: 'bold'},
-            { Name: "eventDate", Value:  matchInfo.EventDate, CssClass: 'bold'}
-        ]});
+            Columns: [{ Name: "code", Value: matchInfo.MatchCode, CssClass: 'bold' },
+            { Name: "matchEvent", Value: (matchInfo.HomeName + ' -vs- ' + matchInfo.AwayName), CssClass: 'bold' },
+            { Name: "eventDate", Value: matchInfo.EventDate, CssClass: 'bold' }
+        ]
+        });
 
         var gridOptions = {
             columns: [
@@ -93,25 +93,24 @@ var parlayDelete = {
         $('#matchInfo').fanexGrid(gridOptions);
     },
 
-    loadSingleTicket : function(list)
-    {
+    loadSingleTicket: function (list) {
         var rows = [];
         list = list.Tickets;
         for (var index = 0; index < list.length; index++) {
             var currentRow = list[index];
             rows.push({
-                Columns:[
-                    { Name: "CustomAdd", Value: NapTicketControl.Helper.isSettledTicket(currentRow.Status) ? "settled" : currentRow.SubTransId},
-                    { Name: "No", Value: currentRow.No  },
+                Columns: [
+                    { Name: "CustomAdd", Value: NapTicketControl.Helper.isSettledTicket(currentRow.ChoiceStatus) ? "settled" : currentRow.SubTransId },
+                    { Name: "No", Value: currentRow.No },
                     { Name: "BetId", Value: currentRow.BetId },
                     { Name: "Player", Value: currentRow.Player },
-                    { Name: "TransDate", Value:currentRow.TransDate  },
-                    { Name: "BetTypeName", Value:currentRow.BetTypeName },
-                    { Name: "Odds", Value:currentRow.Odds},
-                    { Name: "Stake", Value: currentRow.Stake},
-                    { Name: "CurrencyName", Value:currentRow.CurrencyName  },
+                    { Name: "TransDate", Value: currentRow.TransDate },
+                    { Name: "BetTypeName", Value: currentRow.BetTypeName },
+                    { Name: "Odds", Value: currentRow.Odds },
+                    { Name: "Stake", Value: currentRow.Stake },
+                    { Name: "CurrencyName", Value: currentRow.CurrencyName },
                     { Name: "Status", Value: currentRow.Status },
-                    { Name: "Choice", Value:currentRow.Choice }
+                    { Name: "Choice", Value: currentRow.Choice }
                 ],
                 CssClass: "DemoCss"
             });
@@ -119,7 +118,7 @@ var parlayDelete = {
 
         var gridOptions = {
             columns: [
-                { HeaderText: "<div class='option-all'><input class='option' id='chk-ticket-all' type='checkbox' checked='checked'/></div>", Name: "CustomAdd", Width: 30, HeaderAlign: "center", CellAlign: "center", CustomCellRender: parlayDelete.optionCustomRender },
+                { HeaderText: NapTicketControl.Helper.renderCheckBoxAll(list), Name: "CustomAdd", Width: 30, HeaderAlign: "center", CellAlign: "center", CustomCellRender: parlayDelete.optionCustomRender },
                 { HeaderText: "No", Name: "No", Width: 40, HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "BetID", Name: "BetId", Width: 100, HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "Member", Name: "Player", Width: 165, HeaderAlign: "center", CellAlign: "left" },
@@ -140,8 +139,7 @@ var parlayDelete = {
                 itemsPerPage: 50,
                 currentPage: 0,
                 itemsPerPageArray: [50, 100, 150, 500],
-                afterPagedFunction: function()
-                {
+                afterPagedFunction: function () {
                     $('#chk-ticket-all').attr('checked', 'checked');
                 }
             }
@@ -149,16 +147,15 @@ var parlayDelete = {
 
         $('#ticketInfo').fanexGrid(gridOptions);
 
-        if(list.length == 0){
+        if (list.length == 0) {
             Message.Helper.displayFormMsg(false);
         }
-        else{
+        else {
             Message.Helper.displayFormMsg(true);
         }
     },
 
-    optionCustomRender: function (cell)
-    {
+    optionCustomRender: function (cell) {
         var isDisabled = cell.Value.toString() === "settled" ? true : false;
         var disabled = isDisabled ? "disabled=disabled" : "";
         var checkBoxItem = "<input class='chk-ticket' value='" + cell.Value + "' type='checkbox' " + disabled;
@@ -168,14 +165,14 @@ var parlayDelete = {
         return checkBoxItem;
     },
 
-    voidSingleBet: function (){
-        if(!validateData.checkParamBeforVoidTicket()){
+    voidSingleBet: function () {
+        if (!validateData.checkParamBeforVoidTicket()) {
             return;
         }
 
         var param = {
             MatchId: $('#txtMatchId').val(),
-            Hdp: $('#hdp').val() == '' ? '9999' :  $('#hdp').val(),
+            Hdp: $('#hdp').val() == '' ? '9999' : $('#hdp').val(),
             Type: $('#EventType').val(),
             LiveHomeScore: $('#LiveHomeScore').val(),
             LiveAwayScore: $('#LiveAwayScore').val(),
@@ -201,32 +198,32 @@ var parlayDelete = {
                 Content_es: $('#msg-es').val(),
                 Content_ko: $('#msg-ko').val()
             }
-         };
+        };
 
-          $.ajax({
-                type: "POST",
-                url: window.rootUrl + "SportBook/VoidMixParlayBet/VoidParlayBet",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify(param),
-                beforeSend: function () {
-                    NapTicketControl.disableInput();
-                },
-                success: function (rs) {
-                    NapTicketControl.Helper.showMsgBox(rs);
-                    if(rs != null  && rs.ErrorCode == 0){
-                        NapTicketControl.Helper.displayContent(false);
-                        helper.resetInput();
-                    }
-                },
-                error: function (e) {},
-                complete: function (e) {
-                    if(e.status == 403){
-                        NapTicketControl.Helper.showMsgBox(NapTicketControl.Helper.authorizedMsg);
-                    }
-                    NapTicketControl.enableInput();
+        $.ajax({
+            type: "POST",
+            url: window.rootUrl + "SportBook/VoidMixParlayBet/VoidParlayBet",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(param),
+            beforeSend: function () {
+                NapTicketControl.disableInput();
+            },
+            success: function (rs) {
+                NapTicketControl.Helper.showMsgBox(rs);
+                if (rs != null && rs.ErrorCode == 0) {
+                    NapTicketControl.Helper.displayContent(false);
+                    helper.resetInput();
                 }
-            });
+            },
+            error: function (e) { },
+            complete: function (e) {
+                if (e.status == 403) {
+                    NapTicketControl.Helper.showMsgBox(NapTicketControl.Helper.authorizedMsg);
+                }
+                NapTicketControl.enableInput();
+            }
+        });
     }
 };
 
@@ -241,7 +238,7 @@ function VoidMixParlayBet() {
         $txtCalendar: null,
         $optFilters: null,
         $eventTypeWrp: null,
-        $body: null,
+        $body: null
     };
 
     this.OldDataRequest = null;
@@ -304,7 +301,7 @@ VoidMixParlayBet.prototype.Init = function () {
         }
     });
 
-   $('.icon-from-transdate-calendar').click(function () {
+    $('.icon-from-transdate-calendar').click(function () {
         if ($('#TransDate').prop('checked')) {
             $('#FromTransDate').datetimepicker("show");
         } else {
@@ -324,11 +321,11 @@ VoidMixParlayBet.prototype.Init = function () {
         }
     });
 
-    $('.fieldset-advance-mode legend').click(function(){
+    $('.fieldset-advance-mode legend').click(function () {
         helper.toggleAdvancedMode(this);
     });
 
-    $('.toggle-filter-bar').click(function(){
+    $('.toggle-filter-bar').click(function () {
         NapTicketControl.Helper.ToggleFilterBar(this);
     });
 
@@ -377,7 +374,7 @@ VoidMixParlayBet.prototype.Init = function () {
         helper.eventSubAdvanceCS();
     });
 
-     //HTFT check all
+    //HTFT check all
     $('body').delegate('#chk-htft-all', 'click', function () {
         helper.setStatusAllAdvanceHTFT(this.checked, true);
     });
@@ -387,7 +384,7 @@ VoidMixParlayBet.prototype.Init = function () {
         helper.eventSubAdvanceHTFT();
     });
 
-      //FGLG check all
+    //FGLG check all
     $('body').delegate('#chk-flg-all', 'click', function () {
         helper.setStatusAllAdvanceFGLG(this.checked, true);
     });
@@ -407,22 +404,22 @@ VoidMixParlayBet.prototype.Init = function () {
         helper.setStausAllCheckTicket();
     });
 
-    $('#btnSearch').click(function(e){
+    $('#btnSearch').click(function (e) {
         e.stopPropagation();
         parlayDelete.search();
         return false;
     });
 
-    $('#btnVoidBet').click(function(e){
+    $('#btnVoidBet').click(function (e) {
         e.stopPropagation();
         parlayDelete.voidSingleBet();
         return false;
     });
 
-    $("#txtMatchId").keyup(function () {}).ForceIntegerOnly();
-    $("#hdp").keyup(function () {}).ForceDecimalOnly();
-    $("#LiveHomeScore").keyup(function () {}).ForceIntegerOnly();
-    $("#LiveAwayScore").keyup(function () {}).ForceIntegerOnly();
+    $("#txtMatchId").keyup(function () { }).ForceIntegerOnly();
+    $("#hdp").keyup(function () { }).ForceDecimalOnly();
+    $("#LiveHomeScore").keyup(function () { }).ForceIntegerOnly();
+    $("#LiveAwayScore").keyup(function () { }).ForceIntegerOnly();
 };
 
 VoidMixParlayBet.prototype.SetupCalendar = function (strdatetime, txtdate) {
