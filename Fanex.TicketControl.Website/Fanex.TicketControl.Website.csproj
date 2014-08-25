@@ -619,6 +619,21 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\_Libs\MessageNotifier\jquery.messagenotifier.css" />
+    <Content Include="Web.Local.AppSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Local.ConnectionString.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Local.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Local.Debug.config">
+      <DependentUpon>Web.Local.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Local.Release.config">
+      <DependentUpon>Web.Local.config</DependentUpon>
+    </Content>
     <None Include="Scripts\_Libs\MonthPicker\monPickr-0.0.3-custom.less" />
     <Content Include="Content\base\colors.less" />
     <Content Include="Content\base\grid.less" />
