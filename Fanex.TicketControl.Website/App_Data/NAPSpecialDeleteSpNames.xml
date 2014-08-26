@@ -31,16 +31,6 @@
     <Setting Key="RecoverBet_BettransRecoverSpecialBets" SpName="Acc_BettransRecoverSpecialBets" DbName="SVRTXN.TransDB.aplweb" />
   </Function>
 
-  <Function Name="RecoverNumberGameTicket">
-    <Setting Key="RecoverNumberGameTicket_BettransSelRecoverBet_NumberGame" SpName="Acc_BettransSelRecoverBet_NumberGame" DbName="SVRCSD.RepDB.aplweb" />
-    <Setting Key="RecoverNumberGameTicket_Acc_BettransRecoverBet_NumberGame" SpName="Acc_BettransRecoverBet_NumberGame" DbName="SVRTXN.TransDB.aplweb" />
-  </Function>
-
-  <Function Name="NumberGameTicket">
-    <Setting Key="NumberGameTicket_BettransSelSpecialDel" SpName="Acc_BettransSelSpecialDel_NumberGame" DbName="SVRCSD.RepDB.aplweb" />
-    <Setting Key="NumberGameTicket_BettransDelSpecial" SpName="Acc_BettransDelSpecial_NumberGame" DbName="SVRTXN.TransDB.aplweb" />
-  </Function>
-
   <Function Name="OutrightBet">
     <Setting Key="OutrightBet_BettransDelSpecial_LeagueSelOutright" SpName="Acc_BettransDelSpecial_LeagueSelOutright" DbName="SVRCSD.RepDB.aplweb" />
     <Setting Key="OutrightBet_BettransDelSpecial_OutrightSel" SpName="Acc_BettransDelSpecial_OutrightSel" DbName="SVRCSD.RepDB.aplweb" />
