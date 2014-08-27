@@ -27,7 +27,7 @@ var parlayDelete = {
             Bettypes: helper.GetBettypesChecked(),
             Betteam1378: helper.GetBetteam1378(),
             Betteam515: helper.GetBetteam515(),
-            Betteam430: helper.GetBetteam430(),
+            Betteam430: NapTicketControl.GetBetteam430(),
             Betteam6: NapTicketControl.Helper.GetBetteam6(),
             Betteam14: NapTicketControl.Helper.GetBetteam14(),
             Betteam16: helper.GetBetteam16()
@@ -174,7 +174,7 @@ var parlayDelete = {
             Bettypes: helper.GetBettypesChecked(),
             Betteam1378: helper.GetBetteam1378(),
             Betteam515: helper.GetBetteam515(),
-            Betteam430: helper.GetBetteam430(),
+            Betteam430: NapTicketControl.Helper.GetBetteam430(),
             Betteam6: NapTicketControl.Helper.GetBetteam6(),
             Betteam14: NapTicketControl.Helper.GetBetteam14(),
             Betteam16: helper.GetBetteam16(),
@@ -298,6 +298,12 @@ VoidEarlyKOBet.prototype.Init = function () {
     });
 
     NapTicketControl.Helper.initAdvancedModeTotalGoal();
+    NapTicketControl.Helper.initAdvancedModeCorrectScores();
+
+    $('#chk-bettype-22').click(function () {
+        NapTicketControl.Helper.IsClickCorrectScore = false;
+        NapTicketControl.Helper.IsClick1HCorrectScore = true;
+    });
 
     // check all bettypes
     $('body').delegate('#chkallbettype', 'click', function (e) {
@@ -308,7 +314,9 @@ VoidEarlyKOBet.prototype.Init = function () {
             helper.checkConstraintBettyeByEventTypeForAdvanceMode();
         } else {
             $('.chkbettype').removeAttr('checked');
-            helper.setStatusAllAdvanceCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTAndCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvanceCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTCS(false, false);
             NapTicketControl.Helper.setStatusAllAdvanceTG(false, false);
             NapTicketControl.Helper.setStatusAllAdvance1HTG(false, false);
             NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(false, false);
@@ -330,16 +338,6 @@ VoidEarlyKOBet.prototype.Init = function () {
         }
 
         helper.checkConstraintBettyeByEventTypeForAdvanceMode();
-    });
-
-    //Correct Scores check all
-    $('body').delegate('#chk-score-all', 'click', function () {
-        helper.setStatusAllAdvanceCS(this.checked, true);
-    });
-
-    //Correct Scores uncheck any item
-    $('body').delegate('.chk-score', 'click', function () {
-        helper.eventSubAdvanceCS();
     });
 
      //HTFT check all

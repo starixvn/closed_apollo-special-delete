@@ -451,9 +451,7 @@ NapTicketControl.Helper = (function ($) {
                     NapTicketControl.Helper.setStatusAllAdvanceTG(false, false);
                 }
 
-                if (NapTicketControl.Helper.IsSelectedBettype(126) ||
-                    NapTicketControl.Helper.IsSelectedBettype(131) ||
-                    NapTicketControl.Helper.IsSelectedBettype(132)) {
+                if (NapTicketControl.Helper.IsSelectedBettype(126)) {
                     NapTicketControl.Helper.setStatusAllAdvance1HTG(this.checked, true);
                 }
                 else {
@@ -474,10 +472,6 @@ NapTicketControl.Helper = (function ($) {
             $('body').delegate('.chk-ft-tg', 'click', function () {
                 NapTicketControl.Helper.eventSubAdvanceTG();
             });
-
-            NapTicketControl.Helper.setStatusAllAdvance1HTG(false, false);
-            NapTicketControl.Helper.setStatusAllAdvanceTG(false, false);
-            NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(false, false);
         },
 
         setStatusAllAdvanceTG: function (isChecked, isEnable) {
@@ -721,6 +715,203 @@ NapTicketControl.Helper = (function ($) {
             checkBoxAll += isDisabled ? "disabled=disabled /></div>" : "checked='checked' /></div>";
 
             return checkBoxAll;
+        },
+
+        setStatusAllAdvance1HTAndCS: function (isChecked, isEnable) {
+            if (isChecked) {
+                $('.chk-score').attr('checked', 'checked');
+            } else {
+                $('.chk-score').removeAttr('checked');
+            }
+
+            $('.chk-score').attr('disabled', !isEnable);
+        },
+
+        setStatusAllAdvance1HTCS: function (isChecked, isEnable) {
+            if (isChecked) {
+                $('.chk-1h-score').attr('checked', 'checked');
+            } else {
+                $('.chk-1h-score').removeAttr('checked');
+            }
+
+            $('.chk-1h-score').attr('disabled', !isEnable);
+        },
+
+        setStatusAllAdvanceCS: function (isChecked, isEnable) {
+            if (isChecked) {
+                $('.chk-ft-score').attr('checked', 'checked');
+            } else {
+                $('.chk-ft-score').removeAttr('checked');
+            }
+
+            $('.chk-ft-score').attr('disabled', !isEnable);
+        },
+
+        setAdvancedModeCorrectScore: function () {
+            var IsSelectedCorrectScore = NapTicketControl.Helper.IsSelectedBettype(4);
+            var IsSelected1HCorrectScore = NapTicketControl.Helper.IsSelectedBettype(30);
+
+            $('#chk-bettype-3').click(function () {
+                NapTicketControl.Helper.IsClickCorrectScore = true;
+                NapTicketControl.Helper.IsClick1HCorrectScore = false;
+            });
+
+            $('#chk-bettype-20').click(function () {
+                NapTicketControl.Helper.IsClickCorrectScore = false;
+                NapTicketControl.Helper.IsClick1HCorrectScore = true;
+            });
+
+            $('#EventType').click(function () {
+                NapTicketControl.Helper.IsClickCorrectScore = false;
+                NapTicketControl.Helper.IsClick1HCorrectScore = false;
+            });
+
+            if (NapTicketControl.Helper.GetBetteamFTCS() !== '' ||
+                NapTicketControl.Helper.GetBetteamCS() !== '' ||
+                NapTicketControl.Helper.GetBetteam1HTCS() !== '') {
+                if (NapTicketControl.Helper.IsClickCorrectScore) {
+                    NapTicketControl.Helper.setStatusAllAdvanceCS(IsSelectedCorrectScore, IsSelectedCorrectScore);
+                }
+
+                if (NapTicketControl.Helper.IsClick1HCorrectScore) {
+                    NapTicketControl.Helper.setStatusAllAdvance1HTCS(IsSelected1HCorrectScore, IsSelected1HCorrectScore);
+                }
+            }
+            else {
+                NapTicketControl.Helper.setStatusAllAdvanceCS(IsSelectedCorrectScore, IsSelectedCorrectScore);
+                NapTicketControl.Helper.setStatusAllAdvance1HTCS(IsSelected1HCorrectScore, IsSelected1HCorrectScore);
+                NapTicketControl.Helper.setStatusAllAdvance1HTAndCS(true, true);
+            }
+        },
+
+        eventSubAdvanceCS: function () {
+            var selectedItems = $('.all-chk-score .chk-score:input:checked').length;
+            var totalItems = 16;
+
+            if (NapTicketControl.Helper.IsSelectedBettype(4)) {
+                totalItems += 9;
+                selectedItems += $('.chk-ft-score:input:checked').length;
+            }
+
+            if (NapTicketControl.Helper.IsSelectedBettype(30)) {
+                totalItems += 2;
+                selectedItems += $('.chk-1h-score:input:checked').length;
+            }
+
+            if (selectedItems === totalItems) {
+                $('#chk-score-all').attr('checked', 'checked');
+            } else {
+                $('#chk-score-all').removeAttr('checked');
+            }
+        },
+
+        GetBetteam430: function () {
+            var checkedVals = '';
+            var allChecked = [];
+            var isCheckAll = $('#chk-score-all').is(':checked');
+
+            if (isCheckAll) {
+                return "All";
+            }
+
+            var checkedCS = $('.chk-score:checkbox:checked').not('#chk-score-all').map(function () {
+                return this.value;
+            }).get().join('^');
+            var checkedFTCS = $('.chk-ft-score:checkbox:checked').not('#chk-score-all').map(function () {
+                return this.value;
+            }).get().join('^');
+            var checked1HTCS = $('.chk-1h-score:checkbox:checked').not('#chk-score-all').map(function () {
+                return this.value;
+            }).get().join('^');
+
+            if (checkedCS !== '') {
+                allChecked.push(checkedCS);
+            }
+
+            if (checkedFTCS !== '') {
+                allChecked.push(checkedFTCS);
+            }
+
+            if (checked1HTCS !== '') {
+                allChecked.push(checked1HTCS);
+            }
+
+            checkedVals = allChecked.join('^');
+
+            return checkedVals;
+        },
+
+        GetBetteamFTCS: function () {
+            var checkedVals = $('.chk-ft-score:checkbox:checked').not('#chk-score-all').map(function () {
+                return this.value;
+            }).get().join('^');
+
+            return checkedVals;
+        },
+
+        GetBetteamCS: function () {
+            var checkedVals = $('.chk-score:checkbox:checked').not('#chk-score-all').map(function () {
+                return this.value;
+            }).get().join('^');
+
+            return checkedVals;
+        },
+
+        GetBetteam1HTCS: function () {
+            var checkedVals = '';
+            var allChecked = [];
+
+            var checkedCS = $('.chk-score:checkbox:checked').not('#chk-score-all').map(function () {
+                return this.value;
+            }).get().join('^');
+
+            var checked1HTCS = $('.chk-1h-score:checkbox:checked').not('#chk-score-all').map(function () {
+                return this.value;
+            }).get().join('^');
+
+            if (checkedCS !== '') {
+                allChecked.push(checkedCS);
+            }
+
+            if (checked1HTCS !== '') {
+                allChecked.push(checked1HTCS);
+            }
+
+            checkedVals = allChecked.join('^');
+
+            return checkedVals;
+        },
+
+        initAdvancedModeCorrectScores: function () {
+            $('body').delegate('#chk-score-all', 'click', function () {
+                if (NapTicketControl.Helper.IsSelectedBettype(4)) {
+                    NapTicketControl.Helper.setStatusAllAdvanceCS(this.checked, true);
+                }
+                else {
+                    NapTicketControl.Helper.setStatusAllAdvanceCS(false, false);
+                }
+
+                if (NapTicketControl.Helper.IsSelectedBettype(30)) {
+                    NapTicketControl.Helper.setStatusAllAdvance1HTCS(this.checked, true);
+                }
+                else {
+                    NapTicketControl.Helper.setStatusAllAdvance1HTCS(false, false);
+                }
+
+                NapTicketControl.Helper.setStatusAllAdvance1HTAndCS(this.checked, true);
+            });
+
+            $('body').delegate('.chk-score', 'click', function () {
+                NapTicketControl.Helper.eventSubAdvanceCS();
+            });
+
+            $('body').delegate('.chk-1h-score', 'click', function () {
+                NapTicketControl.Helper.eventSubAdvanceCS();
+            });
+
+            $('body').delegate('.chk-ft-score', 'click', function () {
+                NapTicketControl.Helper.eventSubAdvanceCS();
+            });
         }
     };
 } (jQuery));

@@ -7,8 +7,12 @@ var helper = {
         if (isChecked) {
             $('.chkbettype').attr('checked', 'checked')
             $('#chkallbettype').attr('checked', 'checked')
-            helper.setStatusAllAdvanceCS(true, true);
+            NapTicketControl.Helper.setStatusAllAdvance1HTAndCS(true, true);
+            NapTicketControl.Helper.setStatusAllAdvanceCS(true, true);
+            NapTicketControl.Helper.setStatusAllAdvance1HTCS(true, true);
             NapTicketControl.Helper.setStatusAllAdvanceTG(true, true);
+            NapTicketControl.Helper.setStatusAllAdvance1HTG(true, true);
+            NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(true, true);
             helper.setStatusAllAdvanceHDP(true);
             helper.setStatusAllAdvance1X2(true);
             helper.setStatusAllAdvanceHTFT(true, true);
@@ -16,34 +20,16 @@ var helper = {
         } else {
             $('.chkbettype').removeAttr('checked');
             $('#chkallbettype').removeAttr('checked');
-            helper.setStatusAllAdvanceCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTAndCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvanceCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTCS(false, false);
             NapTicketControl.Helper.setStatusAllAdvanceTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(false, false);
             helper.setStatusAllAdvanceHDP(false);
             helper.setStatusAllAdvance1X2(false);
             helper.setStatusAllAdvanceHTFT(false, false);
             helper.setStatusAllAdvanceFGLG(false, false);
-        }
-    },
-
-    setStatusAllAdvanceCS: function (isChecked, isEnable) {
-        if (isChecked) {
-            $('.chk-score').attr('checked', 'checked');
-            //            helper.expandAdvancedMode();
-        } else {
-            $('.chk-score').removeAttr('checked');
-        }
-
-        $('.chk-score').attr('disabled', !isEnable);
-    },
-
-    eventSubAdvanceCS: function () {
-        var selectedItems = $('.all-chk-score .chk-score:input:checked').length;
-        var totalItems = $('.all-chk-score .chk-score:input:checkbox').length;
-
-        if (selectedItems === totalItems) {
-            $('#chk-score-all').attr('checked', 'checked');
-        } else {
-            $('#chk-score-all').removeAttr('checked');
         }
     },
 
@@ -127,17 +113,6 @@ var helper = {
 
     GetParlayTypeChecked: function () {
         var checkedVals = $('.chk-parlay-type:radio:checked').map(function () {
-            return this.value;
-        }).get().join('^');
-
-        return checkedVals;
-    },
-
-    GetBetteam430: function () {
-        //Correct Score & 1st Correct Score, Liveindicator = 0
-
-        var checkedVals = '';
-        checkedVals = $('.all-chk-score .chk-score:checkbox:checked').map(function () {
             return this.value;
         }).get().join('^');
 
@@ -292,12 +267,12 @@ var helper = {
 
         var IsSelectedCS = (NapTicketControl.Helper.IsSelectedBettype(4) || NapTicketControl.Helper.IsSelectedBettype(30));
         if (IsSelectedCS) {
-            if (helper.GetBetteam430() == '') {
-                helper.setStatusAllAdvanceCS(IsSelectedCS, IsSelectedCS);
-            }
+            NapTicketControl.Helper.setAdvancedModeCorrectScore();
         }
         else {
-            helper.setStatusAllAdvanceCS(IsSelectedCS, IsSelectedCS);
+            NapTicketControl.Helper.setStatusAllAdvance1HTAndCS(IsSelectedCS, IsSelectedCS);
+            NapTicketControl.Helper.setStatusAllAdvance1HTCS(IsSelectedCS, IsSelectedCS);
+            NapTicketControl.Helper.setStatusAllAdvanceCS(IsSelectedCS, IsSelectedCS);
         }
 
         var IsSelectedTG = NapTicketControl.Helper.IsSelectedBettype(6) ||

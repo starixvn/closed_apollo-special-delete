@@ -32,7 +32,7 @@ var singleDetete = {
             Bettypes: helper.GetBettypesChecked(),
             Betteam1378: $('#ddlBetTeam1378').val(),
             Betteam515: helper.GetBetteam515(),
-            Betteam430: helper.GetBetteam430(),
+            Betteam430: NapTicketControl.Helper.GetBetteam430(),
             Betteam6: NapTicketControl.Helper.GetBetteam6(),
             Betteam14: NapTicketControl.Helper.GetBetteam14(),
             Betteam16: helper.GetBetteam16(),
@@ -190,7 +190,7 @@ var singleDetete = {
             Bettypes: helper.GetBettypesChecked(),
             Betteam1378: $('#ddlBetTeam1378').val(),
             Betteam515: helper.GetBetteam515(),
-            Betteam430: helper.GetBetteam430(),
+            Betteam430: NapTicketControl.Helper.GetBetteam430(),
             Betteam6: NapTicketControl.Helper.GetBetteam6(),
             Betteam14: NapTicketControl.Helper.GetBetteam14(),
             Betteam16: helper.GetBetteam16(),
@@ -392,6 +392,7 @@ DelSingleTicket.prototype.Init = function () {
     });
 
     NapTicketControl.Helper.initAdvancedModeTotalGoal();
+    NapTicketControl.Helper.initAdvancedModeCorrectScores();
     // check all bettypes
     $('body').delegate('#chkallbettype', 'click', function (e) {
         e.stopPropagation();
@@ -402,7 +403,9 @@ DelSingleTicket.prototype.Init = function () {
             helper.expandAdvancedMode();
         } else {
             $('.chkbettype').removeAttr('checked');
-            helper.setStatusAllAdvanceCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTAndCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvanceCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTCS(false, false);
             NapTicketControl.Helper.setStatusAllAdvanceTG(false, false);
             NapTicketControl.Helper.setStatusAllAdvance1HTG(false, false);
             NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(false, false);
@@ -425,16 +428,6 @@ DelSingleTicket.prototype.Init = function () {
 
         //begin
         helper.checkConstraintBettyeByEventTypeForAdvanceMode();
-    });
-
-    //Correct Scores check all
-    $('body').delegate('#chk-score-all', 'click', function () {
-        helper.setStatusAllAdvanceCS(this.checked, true);
-    });
-
-    //Correct Scores uncheck any item
-    $('body').delegate('.chk-score', 'click', function () {
-        helper.eventSubAdvanceCS();
     });
 
     //HTFT check all
