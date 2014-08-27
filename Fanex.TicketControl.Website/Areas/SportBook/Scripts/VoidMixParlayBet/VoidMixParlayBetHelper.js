@@ -347,5 +347,29 @@ var helper = {
         if (IsSelectedCS || IsSelectedTG || IsSelectedHDP || IsSelected1X2 || IsSelectedHTFT || IsSelectedGFLG) {
             helper.expandAdvancedMode();
         }
+    },
+
+    getTicketEnable: function (list) {
+        if (list.length === 0) {
+            return false;
+        }
+
+        for (var index = 0; index < list.length; index++) {
+            var currentRow = list[index];
+            if (!NapTicketControl.Helper.isSettledTicket(currentRow.ChoiceStatus)) {
+                return true;
+            }
+        };
+
+        return false;
+    },
+
+    renderCheckBoxAll: function (list) {
+        var isDisabled = !helper.getTicketEnable(list) ? true : false;
+        var checkBoxAll = "<div class='option-all'><input class='option' id='chk-ticket-all' type='checkbox' ";
+
+        checkBoxAll += isDisabled ? "disabled=disabled /></div>" : "checked='checked' /></div>";
+
+        return checkBoxAll;
     }
 };

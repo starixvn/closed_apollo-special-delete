@@ -547,7 +547,14 @@ NapTicketControl.Helper = (function ($) {
                 NapTicketControl.Helper.IsClick1HTotalGoal = true;
             });
 
-            if (NapTicketControl.Helper.GetBetteamFTTG() !== '' || NapTicketControl.Helper.GetBetteamTG() !== '') {
+            $('#EventType').click(function () {
+                NapTicketControl.Helper.IsClickTotalGoal = false;
+                NapTicketControl.Helper.IsClick1HTotalGoal = false;
+            });
+
+            if (NapTicketControl.Helper.GetBetteamFTTG() !== '' ||
+                NapTicketControl.Helper.GetBetteamTG() !== '' ||
+                NapTicketControl.Helper.GetBetteam1HTG() !== '') {
                 if (NapTicketControl.Helper.IsClickTotalGoal) {
                     NapTicketControl.Helper.setStatusAllAdvanceTG(IsSelectedTotalGoal, IsSelectedTotalGoal);
                 }

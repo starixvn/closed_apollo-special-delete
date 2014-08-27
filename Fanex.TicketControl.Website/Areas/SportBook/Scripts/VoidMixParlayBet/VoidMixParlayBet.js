@@ -118,7 +118,7 @@ var parlayDelete = {
 
         var gridOptions = {
             columns: [
-                { HeaderText: NapTicketControl.Helper.renderCheckBoxAll(list), Name: "CustomAdd", Width: 30, HeaderAlign: "center", CellAlign: "center", CustomCellRender: parlayDelete.optionCustomRender },
+                { HeaderText: helper.renderCheckBoxAll(list), Name: "CustomAdd", Width: 30, HeaderAlign: "center", CellAlign: "center", CustomCellRender: parlayDelete.optionCustomRender },
                 { HeaderText: "No", Name: "No", Width: 40, HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "BetID", Name: "BetId", Width: 100, HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "Member", Name: "Player", Width: 165, HeaderAlign: "center", CellAlign: "left" },
