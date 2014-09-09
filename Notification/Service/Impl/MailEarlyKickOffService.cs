@@ -102,7 +102,7 @@ namespace Fanex.TicketControl.Notification.Service.Impl
                 if (realTickets.Count > 0 && mailCsd.Count() > 0)
                 {
                     var emailBody = HttpUtility.HtmlDecode(GetSpecialDeleteEmailBody(realTickets, userNegativeBalance, voidBetEmailViewModel));
-                    var title = voidBetEmailViewModel.Title;
+                    var subject = voidBetEmailViewModel.Title;
 
                     // Send email
                     var mailRecord = new MailRecord
@@ -110,8 +110,8 @@ namespace Fanex.TicketControl.Notification.Service.Impl
                         MailTo = mailCsd,
                         MailCc = mailCC,
                         MailBcc = mailIt,
-                        Title = title,
-                        Subject = title,
+                        Title = Messages.EmailFrom,
+                        Subject = subject,
                         Body = emailBody
                     };
 
@@ -147,7 +147,7 @@ namespace Fanex.TicketControl.Notification.Service.Impl
                 if (uusTickets.Count > 0 && mailTo.Count() > 0)
                 {
                     var emailBody = HttpUtility.HtmlDecode(GetSpecialDeleteEmailBody(uusTickets, userNegativeBalance, voidBetEmailViewModel));
-                    var title = voidBetEmailViewModel.Title;
+                    var subject = voidBetEmailViewModel.Title;
 
                     // Send email
                     var mailRecord = new MailRecord
@@ -155,8 +155,8 @@ namespace Fanex.TicketControl.Notification.Service.Impl
                         MailTo = mailTo,
                         MailCc = mailCC,
                         MailBcc = mailBcc,
-                        Title = title,
-                        Subject = title,
+                        Title = Messages.EmailFrom,
+                        Subject = subject,
                         Body = emailBody
                     };
 
