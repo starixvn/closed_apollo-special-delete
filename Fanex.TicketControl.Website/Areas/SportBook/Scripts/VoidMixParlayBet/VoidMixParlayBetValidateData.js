@@ -33,7 +33,7 @@ var validateData = {
         //cs
         var IsSelectedCS = NapTicketControl.Helper.IsSelectedBettype(4) || NapTicketControl.Helper.IsSelectedBettype(30);
         if (IsSelectedCS) {
-            if (helper.GetBetteam430() == '') {
+            if (NapTicketControl.Helper.GetBetteam430() == '') {
                 helper.expandAdvancedMode();
                 $('#msg').html(tooltip.show('chk-score-all', 'Please select a score for bettype: Correct score!.')).show();
                 return false;

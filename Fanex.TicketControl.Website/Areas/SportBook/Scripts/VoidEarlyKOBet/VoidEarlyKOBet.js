@@ -27,7 +27,7 @@ var parlayDelete = {
             Bettypes: helper.GetBettypesChecked(),
             Betteam1378: helper.GetBetteam1378(),
             Betteam515: helper.GetBetteam515(),
-            Betteam430: NapTicketControl.GetBetteam430(),
+            Betteam430: NapTicketControl.Helper.GetBetteam430(),
             Betteam6: NapTicketControl.Helper.GetBetteam6(),
             Betteam14: NapTicketControl.Helper.GetBetteam14(),
             Betteam16: helper.GetBetteam16()
@@ -94,7 +94,7 @@ var parlayDelete = {
             var currentRow = list[index];
             rows.push({
                 Columns:[
-                    { Name: "CustomAdd", Value: NapTicketControl.Helper.isSettledTicket(currentRow.Status) ? "settled" : currentRow.SubTransId},
+                    { Name: "CustomAdd", Value: NapTicketControl.Helper.isSettledTicket(currentRow.ChoiceStatus) ? "settled" : currentRow.SubTransId},
                     { Name: "No", Value: currentRow.No  },
                     { Name: "BetId", Value: currentRow.BetId },
                     { Name: "Player", Value: currentRow.Player },

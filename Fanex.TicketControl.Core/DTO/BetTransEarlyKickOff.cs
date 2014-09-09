@@ -17,12 +17,16 @@ namespace Fanex.TicketControl.Core.DTO
     {
         public long SubTransId { get; set; }
 
-        public short ParlayType { get; set; }
+        public short ChoiceBetType { get; set; }
 
         public bool IsMP { get; set; }
 
         public string RefNo { get; set; }
 
         public decimal MOdds { get; set; }
+
+        public string ChoiceBetTeam { get; set; }
+
+        public string ChoiceStatus { get; set; }
     }
 }
