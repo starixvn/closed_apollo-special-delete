@@ -12,6 +12,7 @@ namespace Fanex.TicketControl.Misc.Services.Impl
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Xml;
     using ExcelUtil.Spreadsheet;
     using Fanex.BetList.Core.Builder;
@@ -178,11 +179,14 @@ namespace Fanex.TicketControl.Misc.Services.Impl
         /// <returns>Return value.</returns>
         private string GetChoiceInfo(TicketListingDetail ticketDetail)
         {
+            const string DECODE = "&amp;";
+            var reg = new Regex("&(?![a-zA-Z]{2,6};|#[0-9]{2,4};)");
             var choiceHtml = ticketDetail.ChoiceHtml;
+            choiceHtml = reg.Replace(choiceHtml, DECODE);
             var betTeam = string.Empty;
             var handicap = string.Empty;
             var liveScore = string.Empty;
-            XmlDocument xmlDoc = new XmlDocument();
+            var xmlDoc = new XmlDocument();
             choiceHtml = choiceHtml.Replace("&nbsp;", " ");
             xmlDoc.LoadXml(choiceHtml);
             var foundSpanNodes = xmlDoc.SelectNodes("//span");
@@ -240,9 +244,11 @@ namespace Fanex.TicketControl.Misc.Services.Impl
                 case 0:
                     // do nothing
                     break;
+
                 case 1:
                     oddsValue = foundSpanNodes[0].InnerText.Trim();
                     break;
+
                 default:
                     oddsValue = foundSpanNodes[0].InnerText.Trim();
                     oddsType = foundSpanNodes[1].InnerText.Trim();
@@ -275,21 +281,27 @@ namespace Fanex.TicketControl.Misc.Services.Impl
                     case "110":
                         systemParlaySelection = "Trixie ";
                         break;
+
                     case "1110":
                         systemParlaySelection = "Yankee";
                         break;
+
                     case "11110":
                         systemParlaySelection = "Canadian";
                         break;
+
                     case "111110":
                         systemParlaySelection = "Heinz";
                         break;
+
                     case "1111110":
                         systemParlaySelection = "Super Heinz";
                         break;
+
                     case "11111110":
                         systemParlaySelection = "Goliath";
                         break;
+
                     default:
                         systemParlaySelection = "Trixie!";
                         break;
@@ -406,13 +418,16 @@ namespace Fanex.TicketControl.Misc.Services.Impl
             {
                 case 0:
                     break;
+
                 case 1:
                     betTeam = betChoiceNode.ChildNodes[0].InnerText.Trim();
                     break;
+
                 case 2:
                     betTeam = betChoiceNode.ChildNodes[0].InnerText.Trim();
                     handicap = betChoiceNode.ChildNodes[1].InnerText.Trim();
                     break;
+
                 default:
                     betTeam = betChoiceNode.ChildNodes[0].InnerText.Trim();
                     handicap = betChoiceNode.ChildNodes[1].InnerText.Trim();
