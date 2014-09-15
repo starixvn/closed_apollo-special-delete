@@ -1,4 +1,5 @@
-/* File Created: March 12, 2013 */
+/*global NapTicketControl, ContextMenu, validateData, Message*/
+"use strict";
 
 $(function () {
     outright.init();
@@ -28,7 +29,9 @@ var helper = {
     getSubTicketsChecked: function () {
         var checkedVals = '';
         checkedVals = $('.chk-ticket:checkbox:checked').not('#chk-ticket-all').map(function () {
-            return this.value;
+            if (!isNaN(parseFloat(this.value))) {
+                return this.value;
+            }
         }).get().join(',');
 
         return checkedVals;
@@ -198,7 +201,7 @@ var outright = {
             var currentRow = list[index];
             rows.push({
                 Columns: [
-                    { Name: "CustomAdd", Value: currentRow.BetId },
+                    { Name: "CustomAdd", Value: NapTicketControl.Helper.isSettledTicket(currentRow.Status) ? "settled" : currentRow.BetId },
                     { Name: "No", Value: currentRow.No },
                     { Name: "BetId", Value: currentRow.BetId },
                     { Name: "Player", Value: currentRow.Player },
@@ -215,7 +218,7 @@ var outright = {
 
         var gridOptions = {
             columns: [
-                { HeaderText: "<div class='option-all'><input class='option' id='chk-ticket-all' type='checkbox' checked='checked'/></div>", Name: "CustomAdd", Width: 30, HeaderAlign: "center", CellAlign: "center", CustomCellRender: outright.optionCustomRender },
+                { HeaderText: NapTicketControl.Helper.renderCheckBoxAll(list), Name: "CustomAdd", Width: 30, HeaderAlign: "center", CellAlign: "center", CustomCellRender: outright.optionCustomRender },
                 { HeaderText: "No", Name: "No", Width: 20, HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "BetID", Name: "BetId", Width: 100, HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "Member", Name: "Player", Width: 165, HeaderAlign: "center", CellAlign: "left" },
@@ -249,7 +252,13 @@ var outright = {
     },
 
     optionCustomRender: function (cell) {
-        return "<input class='chk-ticket' value='" + cell.Value + "' type='checkbox' checked='checked'/>";
+        var isDisabled = cell.Value.toString() === "settled" ? true : false;
+        var disabled = isDisabled ? "disabled=disabled" : "";
+        var checkBoxItem = "<input class='chk-ticket' value='" + cell.Value + "' type='checkbox' " + disabled;
+
+        checkBoxItem += !isDisabled ? " checked='checked'>" : ">";
+
+        return checkBoxItem;
     },
 
     voidOutrightBet: function () {

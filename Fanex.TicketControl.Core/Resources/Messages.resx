@@ -156,4 +156,7 @@
   <data name="VoidParlayEmailTitle" xml:space="preserve">
     <value>Void Parlay Bets Report {0}</value>
   </data>
+  <data name="EmailFrom" xml:space="preserve">
+    <value>Sunbet Special Delete system</value>
+  </data>
 </root>

@@ -1,4 +1,7 @@
-﻿/* File Created: March 6, 2013 */
+﻿/*exported validateData*/
+/*global NapTicketControl, tooltip, Message, helper*/
+"use strict";
+
 var validateData = {
     checkParamBeforeGetData: function () {
         $('#msg').hide();
@@ -28,7 +31,6 @@ var validateData = {
             return false;
         }
 
-      
         return true;
     },
 
@@ -43,7 +45,7 @@ var validateData = {
         if (Message.Validator.validateMessageConstraints() === false) {
             return false;
         }
-        
+
         if ($('#password').val() == '') {
             $('#msg').html(tooltip.show('password', 'Please input password.')).show();
             return false;

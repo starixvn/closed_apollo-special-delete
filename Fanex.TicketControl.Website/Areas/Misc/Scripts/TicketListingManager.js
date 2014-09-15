@@ -1,4 +1,5 @@
-﻿/* File Created: February 6, 2013 */
+﻿/*global TicketListing*/
+"use strict";
 
 $(function () {
     var ticketListingManager = new TicketListingManager();

@@ -61,7 +61,6 @@ namespace Fanex.TicketControl.Website.App_Start
                 "~/Scripts/_Libs/FormatLibs/NumberFormat/numeral.js",
                 "~/Scripts/NapTicketControl.js",
                 "~/Scripts/NapTicketControl.Helper.js",
-                "~/Scripts/NapTicketControl.Validator.js",
                 "~/Scripts/_Libs/Validation/jquery.validationEngine-en.js",
                 "~/Scripts/_Libs/Validation/jquery.validationEngine.js",
                 "~/Scripts/_Libs/Utils/date.format.js"));

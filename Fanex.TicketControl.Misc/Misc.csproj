@@ -34,11 +34,9 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\_Dependency\Others\ExcelUtil.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Core">
-      <HintPath>..\_Dependency\FanexLibs\Fanex.BetList.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.BetList.Core.TicketHelper">
-      <HintPath>..\_Dependency\FanexLibs\Fanex.BetList.Core.TicketHelper.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.BetList.Core.2.0.3.3\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

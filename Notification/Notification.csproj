@@ -31,12 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fanex.BetList.Core, Version=1.0.4955.24263, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependency\FanexLibs\Fanex.BetList.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.BetList.Core.TicketHelper">
-      <HintPath>..\_Dependency\FanexLibs\Fanex.BetList.Core.TicketHelper.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core">
+      <HintPath>..\packages\Fanex.BetList.Core.2.0.3.3\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Caching">
       <HintPath>..\_Dependency\FanexLibs\Fanex.Caching.dll</HintPath>

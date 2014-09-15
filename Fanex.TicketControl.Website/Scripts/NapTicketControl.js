@@ -1,4 +1,5 @@
 ﻿/* File Created: January 28, 2013 */
+"use strict";
 
 var NapTicketControl = (function ($) {
     var MessageType = {

@@ -1,11 +1,18 @@
-﻿var helper = {
+﻿/* exported helper */
+/*global NapTicketControl*/
+"use strict";
 
+var helper = {
     setStatusAllBettype: function (isChecked) {
         if (isChecked) {
             $('.chkbettype').attr('checked', 'checked')
             $('#chkallbettype').attr('checked', 'checked')
-            helper.setStatusAllAdvanceCS(true, true);
-            helper.setStatusAllAdvanceTG(true, true);
+            NapTicketControl.Helper.setStatusAllAdvance1HTAndCS(true, true);
+            NapTicketControl.Helper.setStatusAllAdvanceCS(true, true);
+            NapTicketControl.Helper.setStatusAllAdvance1HTCS(true, true);
+            NapTicketControl.Helper.setStatusAllAdvanceTG(true, true);
+            NapTicketControl.Helper.setStatusAllAdvance1HTG(true, true);
+            NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(true, true);
             helper.setStatusAllAdvanceHDP(true);
             helper.setStatusAllAdvance1X2(true);
             helper.setStatusAllAdvanceHTFT(true, true);
@@ -13,46 +20,17 @@
         } else {
             $('.chkbettype').removeAttr('checked');
             $('#chkallbettype').removeAttr('checked');
-            helper.setStatusAllAdvanceCS(false, false);
-            helper.setStatusAllAdvanceTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTAndCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvanceCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvanceTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(false, false);
             helper.setStatusAllAdvanceHDP(false);
             helper.setStatusAllAdvance1X2(false);
             helper.setStatusAllAdvanceHTFT(false, false);
             helper.setStatusAllAdvanceFGLG(false, false);
         }
-    },
-
-    setStatusAllAdvanceCS: function (isChecked, isEnable) {
-        if (isChecked) {
-            $('.chk-score').attr('checked', 'checked');
-            //            helper.expandAdvancedMode();
-        } else {
-            $('.chk-score').removeAttr('checked');
-        }
-
-        $('.chk-score').attr('disabled', !isEnable);
-    },
-
-    eventSubAdvanceCS: function () {
-        var selectedItems = $('.all-chk-score .chk-score:input:checked').length;
-        var totalItems = $('.all-chk-score .chk-score:input:checkbox').length;
-
-        if (selectedItems === totalItems) {
-            $('#chk-score-all').attr('checked', 'checked');
-        } else {
-            $('#chk-score-all').removeAttr('checked');
-        }
-    },
-
-    setStatusAllAdvanceTG: function (isChecked, isEnable) {
-        if (isChecked) {
-            $('.chk-tg').attr('checked', 'checked');
-            //            helper.expandAdvancedMode();
-        } else {
-            $('.chk-tg').removeAttr('checked');
-        }
-
-        $('.chk-tg').attr('disabled', !isEnable);
     },
 
     eventSubAdvanceTG: function () {
@@ -125,23 +103,6 @@
         }
     },
 
-    IsSelectedBettype: function (bettypeId) {
-        var checkedVals = $('.chkbettype:checkbox:checked').map(function () {
-            return this.value;
-        }).get();
-
-        var isSelected = false;
-
-        for (var i = 0; i < checkedVals.length; i++) {
-            if (checkedVals[i] == bettypeId) {
-                isSelected = true;
-                break;
-            }
-        }
-
-        return isSelected;
-    },
-
     GetBettypesChecked: function () {
         var checkedVals = $('.chkbettype:checkbox:checked').map(function () {
             return this.value;
@@ -152,39 +113,6 @@
 
     GetParlayTypeChecked: function () {
         var checkedVals = $('.chk-parlay-type:radio:checked').map(function () {
-            return this.value;
-        }).get().join('^');
-
-
-        return checkedVals;
-    },
-
-    GetBetteam430: function () {
-        //Correct Score & 1st Correct Score, Liveindicator = 0
-
-        var checkedVals = '';
-        checkedVals = $('.all-chk-score .chk-score:checkbox:checked').map(function () {
-            return this.value;
-        }).get().join('^');
-
-        return checkedVals;
-    },
-
-    GetBetteam6: function () {
-        //Total Goal, Liveindicator = 0
-        var checkedVals = '';
-        checkedVals = $('.chk-tg:checkbox:checked').not('#chk-tg-all').map(function () {
-            return this.value;
-        }).get().join('^');
-
-        return checkedVals;
-    },
-
-    GetBetteam14: function () {
-        //First Goal/Last Goal, Liveindicator = 0
-
-        var checkedVals = '';
-        checkedVals = $('.chk-flg:checkbox:checked').not('#chk-flg-all').map(function () {
             return this.value;
         }).get().join('^');
 
@@ -207,7 +135,7 @@
 
         var checkedVals = '';
         if ($('#EventType').val() == '1' || $('#EventType').val() == '2') {
-            var IsSelected515 = helper.IsSelectedBettype(5) || helper.IsSelectedBettype(15);
+            var IsSelected515 = NapTicketControl.Helper.IsSelectedBettype(5) || NapTicketControl.Helper.IsSelectedBettype(15);
             checkedVals = $('#ddlBetTeam515').val();
         }
 
@@ -248,7 +176,9 @@
     getSubTicketsChecked: function () {
         var checkedVals = '';
         checkedVals = $('.chk-ticket:checkbox:checked').not('#chk-ticket-all').map(function () {
-            return this.value;
+            if (!isNaN(parseFloat(this.value))) {
+                return this.value;
+            }
         }).get().join(',');
 
         return checkedVals;
@@ -320,7 +250,6 @@
             $('.fieldset-advance-mode').addClass('nb-lrb');
             $(self).attr('title', 'Expand advanced mode');
             isExpand = false;
-
         } else {
             iEle.removeClass('icon-plus-sign');
             iEle.addClass('icon-minus-sign');
@@ -336,35 +265,41 @@
     checkConstraintBettyeByEventTypeForAdvanceMode: function () {
         var eventType = $('#EventType').val();
 
-        var IsSelectedCS = (helper.IsSelectedBettype(4) || helper.IsSelectedBettype(30));
+        var IsSelectedCS = (NapTicketControl.Helper.IsSelectedBettype(4) || NapTicketControl.Helper.IsSelectedBettype(30));
         if (IsSelectedCS) {
-            if (helper.GetBetteam430() == '') {
-                helper.setStatusAllAdvanceCS(IsSelectedCS, IsSelectedCS);
-            }
+            NapTicketControl.Helper.setAdvancedModeCorrectScore();
         }
         else {
-            helper.setStatusAllAdvanceCS(IsSelectedCS, IsSelectedCS);
+            NapTicketControl.Helper.setStatusAllAdvance1HTAndCS(IsSelectedCS, IsSelectedCS);
+            NapTicketControl.Helper.setStatusAllAdvance1HTCS(IsSelectedCS, IsSelectedCS);
+            NapTicketControl.Helper.setStatusAllAdvanceCS(IsSelectedCS, IsSelectedCS);
         }
 
-        var IsSelectedTG = helper.IsSelectedBettype(6);
+        var IsSelectedTG = NapTicketControl.Helper.IsSelectedBettype(6) ||
+                            NapTicketControl.Helper.IsSelectedBettype(126);
         if (IsSelectedTG) {
-            if (helper.GetBetteam6() == '') {
-                helper.setStatusAllAdvanceTG(IsSelectedTG, IsSelectedTG);
-            }
+            $('#chk-bettype-24').click(function () {
+                NapTicketControl.Helper.IsClickTotalGoal = false;
+                NapTicketControl.Helper.IsClick1HTotalGoal = true;
+            });
+
+            NapTicketControl.Helper.setAdvancedModeTotalGoal();
         }
         else {
-            helper.setStatusAllAdvanceTG(IsSelectedTG, IsSelectedTG);
+            NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvanceTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTG(false, false);
         }
 
-        var IsSelectedHDP = helper.IsSelectedBettype(1) || helper.IsSelectedBettype(7)
-                            || helper.IsSelectedBettype(3) || helper.IsSelectedBettype(8)
-                            || helper.IsSelectedBettype(2) || helper.IsSelectedBettype(12);
+        var IsSelectedHDP = NapTicketControl.Helper.IsSelectedBettype(1) || NapTicketControl.Helper.IsSelectedBettype(7)
+                            || NapTicketControl.Helper.IsSelectedBettype(3) || NapTicketControl.Helper.IsSelectedBettype(8)
+                            || NapTicketControl.Helper.IsSelectedBettype(2) || NapTicketControl.Helper.IsSelectedBettype(12);
         helper.setStatusAllAdvanceHDP(IsSelectedHDP);
 
-        var IsSelected1X2 = helper.IsSelectedBettype(5) || helper.IsSelectedBettype(15);
+        var IsSelected1X2 = NapTicketControl.Helper.IsSelectedBettype(5) || NapTicketControl.Helper.IsSelectedBettype(15);
         helper.setStatusAllAdvance1X2(IsSelected1X2);
 
-        var IsSelectedHTFT = helper.IsSelectedBettype(16);
+        var IsSelectedHTFT = NapTicketControl.Helper.IsSelectedBettype(16);
         if (IsSelectedHTFT) {
             if (helper.GetBetteam16() == '') {
                 helper.setStatusAllAdvanceHTFT(IsSelectedHTFT, IsSelectedHTFT);
@@ -374,9 +309,9 @@
             helper.setStatusAllAdvanceHTFT(IsSelectedHTFT, IsSelectedHTFT);
         }
 
-        var IsSelectedGFLG = helper.IsSelectedBettype(14);
+        var IsSelectedGFLG = NapTicketControl.Helper.IsSelectedBettype(14) || NapTicketControl.Helper.IsSelectedBettype(127);
         if (IsSelectedGFLG) {
-            if (helper.GetBetteam14() == '') {
+            if (NapTicketControl.Helper.GetBetteam14() == '') {
                 helper.setStatusAllAdvanceFGLG(IsSelectedGFLG, IsSelectedGFLG);
             }
         }
@@ -387,5 +322,29 @@
         if (IsSelectedCS || IsSelectedTG || IsSelectedHDP || IsSelected1X2 || IsSelectedHTFT || IsSelectedGFLG) {
             helper.expandAdvancedMode();
         }
+    },
+
+    getTicketEnable: function (list) {
+        if (list.length === 0) {
+            return false;
+        }
+
+        for (var index = 0; index < list.length; index++) {
+            var currentRow = list[index];
+            if (!NapTicketControl.Helper.isSettledTicket(currentRow.ChoiceStatus)) {
+                return true;
+            }
+        };
+
+        return false;
+    },
+
+    renderCheckBoxAll: function (list) {
+        var isDisabled = !helper.getTicketEnable(list) ? true : false;
+        var checkBoxAll = "<div class='option-all'><input class='option' id='chk-ticket-all' type='checkbox' ";
+
+        checkBoxAll += isDisabled ? "disabled=disabled /></div>" : "checked='checked' /></div>";
+
+        return checkBoxAll;
     }
 };

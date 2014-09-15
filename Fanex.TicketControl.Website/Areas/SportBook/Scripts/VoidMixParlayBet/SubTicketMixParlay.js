@@ -1,4 +1,6 @@
-/* File Created: March 7, 2013 */
+/* exported showMP, showCombMP*/
+/*global NapTicketControl*/
+"use strict";
 
 function showMP(subTransId, refNo) {
     subTicketMP.getSubTicketMP(subTransId, refNo);
@@ -51,7 +53,7 @@ var subTicketMP = {
             success: function (rs) {
                 var arrChoice = [];
                 for (var i = 0; i < rs.length; i++) {
-                    row = rs[i];
+                    var row = rs[i];
                     if (subTransId == row.SubTransId) {
                         arrChoice.push('<div class="line"><div class="selected">' + row.Choice + '</div></div>');
                     }

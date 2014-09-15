@@ -1,4 +1,5 @@
-/* File Created: February 5, 2013 */
+/*global NapTicketControl*/
+"use strict"
 
 var voidByBetId = {
     search: function() {

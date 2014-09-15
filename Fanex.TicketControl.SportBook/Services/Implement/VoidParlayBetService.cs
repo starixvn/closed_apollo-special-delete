@@ -230,7 +230,8 @@ namespace Fanex.TicketControl.SportBook.Services.Implement
                                   Stake = ConvertByBetType.Stake(item.Stake),
                                   Odds = ticketDetail.OddHtml,
                                   Choice = ticketDetail.ChoiceHtml,
-                                  IsDelete = true
+                                  IsDelete = true,
+                                  ChoiceStatus = item.Choice_Status
                               }).ToList();
 
             return new GroupViewModel<ParlayTicket> { Tickets = listTicket };

@@ -1,4 +1,6 @@
 ﻿/* File Created: February 6, 2013 */
+/*global VoidMixParlayBet*/
+"use strict";
 
 $(function () {
     var voidMixParlayBetManager = new VoidMixParlayBetManager();

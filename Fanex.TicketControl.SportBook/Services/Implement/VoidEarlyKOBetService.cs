@@ -12,6 +12,7 @@ namespace Fanex.TicketControl.SportBook.Services.Implement
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Globalization;
     using System.Linq;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
@@ -135,52 +136,42 @@ namespace Fanex.TicketControl.SportBook.Services.Implement
         /// <returns>Return ticket detail.</returns>
         private TicketDetail GetTicketDetail(BetTransEarlyKickOff item)
         {
-            var tickeDetail = new TicketDetail();
-            var ticketHelper = new TicketHelper();
             var factory = new BetListHTMLFactory();
             var builder = factory.CreateBuilder();
             GetCachePropertyById funcGetOddsTypeName = CacheRef.GetOddsTypeName;
+            var ticketDetail = new TicketDetail { Ticket = NewTicket(item) };
 
-            var betTypeId = item.BetType;
-
-            tickeDetail.Ticket = NewTicket(item);
-            ticketHelper.ShowBetType = false;
-            ticketHelper.ShowLeague = false;
-            ticketHelper.ShowMatch = false;
-            ticketHelper.ShowSystemParlayDetail = false;
-            ticketHelper.IsShowOddsWithChoice = true;
-
-            var choice = builder.BuildChoice(tickeDetail.Ticket, ticketHelper, null, false).Replace("<br/><br/>", string.Empty);
-
-            var oddsHtml = builder.BuildOdds(tickeDetail.Ticket, null, funcGetOddsTypeName);
-            var oddName = OddsText.GetOddsName(oddsHtml);
-            oddName = string.IsNullOrWhiteSpace(oddName)
-                ? oddsHtml.Replace("<br />", " ")
-                : oddsHtml.Replace("<br />", " (") + ")";
-            tickeDetail.OddHtml = oddName;
-
-            var strChoiceFavorite = string.Empty;
-            if (item.IsMP)
+            var ticketHelper = new TicketHelper
             {
-                tickeDetail.Ticket.Odds = item.Odds;
-                tickeDetail.Ticket.BetTeam = item.BetTeam;
-                tickeDetail.Ticket.BetTypeId = item.BetType;
-                tickeDetail.Ticket.HomeId = item.HomeId;
-                tickeDetail.Ticket.AwayId = item.AwayId;
+                ShowLeague = false,
+                ShowMatch = false,
+                ShowBetType = false,
+                IsShowOddsWithChoice = true,
+                ShowSystemParlayDetail = false
+            };
 
-                var choiceFavorite = builder.BuildChoiceBlock(tickeDetail.Ticket, ticketHelper, null, false);
+            ticketDetail.Ticket.BetTypeId = 0;
+            ticketDetail.StakeHtml = builder.BuildStake(ticketDetail.Ticket);
+            ticketDetail.OddHtml = builder.BuildOdds(ticketDetail.Ticket, null, funcGetOddsTypeName);
 
-                choiceFavorite.ScoreMapIcon = null;
-                choiceFavorite.BetType = null;
-                choiceFavorite.Match = null;
-                choiceFavorite.League = null;
-                strChoiceFavorite = choiceFavorite;
-            }
+            ticketDetail.Ticket.BetTypeId = item.BetType;
+            var choice = builder.BuildChoice(ticketDetail.Ticket, ticketHelper, null, false);
 
-            var strChoice = choice.Replace("<div id=", "<div id='dvFavorite_" + item.SubTransId + "'>" + strChoiceFavorite + "</div><div id=");
-            strChoice += "<div id='divEvent_" + item.SubTransId + "'></div>";
-            tickeDetail.ChoiceHtml = strChoice;
-            return tickeDetail;
+            ticketDetail.Ticket.BetTeam = item.ChoiceBetTeam;
+            ticketDetail.Ticket.BetTypeId = item.IsMP ? item.ChoiceBetType : item.BetType;
+
+            var choiceFavorite = builder.BuildChoice(ticketDetail.Ticket, ticketHelper, null, false);
+            var choiceBlock = builder.BuildChoiceBlock(ticketDetail.Ticket, ticketHelper, null, false);
+            choiceBlock.League = null;
+            choiceBlock.Match = null;
+            choiceBlock.BetType = null;
+            var subTransId = item.SubTransId.ToString(CultureInfo.InvariantCulture);
+            choice = choice.Replace("<br/><br/>", string.Empty);
+            var strChoice = choice.Replace("<div id=", "<div id='dvFavorite_" + subTransId + "'>" + choiceFavorite + "</div><div id=");
+            strChoice += "<div id='divEvent_" + subTransId + "'></div>";
+            ticketDetail.ChoiceHtml = item.IsMP ? strChoice : choiceBlock;
+
+            return ticketDetail;
         }
 
         /// <summary>
@@ -193,7 +184,7 @@ namespace Fanex.TicketControl.SportBook.Services.Implement
             return new Ticket()
             {
                 BetId = item.TransId,
-                BetTypeId = item.IsMP ? item.ParlayType : item.BetType,
+                BetTypeId = item.IsMP ? item.ChoiceBetType : item.BetType,
                 TransId = item.SubTransId,
                 RefNo = item.RefNo,
                 BetTeam = item.BetTeam,
@@ -238,7 +229,8 @@ namespace Fanex.TicketControl.SportBook.Services.Implement
                                BetTypeName = item.BetTypeName,
                                Stake = ConvertByBetType.Stake(item.Stake),
                                Odds = ticketDetail.OddHtml,
-                               Choice = ticketDetail.ChoiceHtml
+                               Choice = ticketDetail.ChoiceHtml,
+                               ChoiceStatus = item.ChoiceStatus
                            }).ToList();
             return new GroupViewModel<EarlyKickOffTicket> { Tickets = tickets };
         }

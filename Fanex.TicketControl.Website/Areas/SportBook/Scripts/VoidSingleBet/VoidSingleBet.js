@@ -1,4 +1,5 @@
-/* File Created: February 5, 2013 */
+/*global NapTicketControl, tooltip, ContextMenu, dateFormat, validateData, Message, helper*/
+"use strict";
 
 var singleDetete = {
     param: {
@@ -31,9 +32,9 @@ var singleDetete = {
             Bettypes: helper.GetBettypesChecked(),
             Betteam1378: $('#ddlBetTeam1378').val(),
             Betteam515: helper.GetBetteam515(),
-            Betteam430: helper.GetBetteam430(),
-            Betteam6: helper.GetBetteam6(),
-            Betteam14: helper.GetBetteam14(),
+            Betteam430: NapTicketControl.Helper.GetBetteam430(),
+            Betteam6: NapTicketControl.Helper.GetBetteam6(),
+            Betteam14: NapTicketControl.Helper.GetBetteam14(),
             Betteam16: helper.GetBetteam16(),
             SAFilter: $('#TicketType').val()
         };
@@ -105,7 +106,7 @@ var singleDetete = {
             var currentRow = list[index];
             rows.push({
                 Columns: [
-                    { Name: "CustomAdd", Value: currentRow.BetId },
+                    { Name: "CustomAdd", Value: NapTicketControl.Helper.isSettledTicket(currentRow.Status) ? "settled" : currentRow.BetId },
                     { Name: "No", Value: currentRow.No },
                     { Name: "BetId", Value: currentRow.BetId },
                     { Name: "Player", Value: currentRow.Player },
@@ -125,7 +126,7 @@ var singleDetete = {
 
         var gridOptions = {
             columns: [
-                { HeaderText: "<div class='option-all'><input class='option' id='chk-ticket-all' type='checkbox' checked='checked'/></div>", Name: "CustomAdd", Width: 30, HeaderAlign: "center", CellAlign: "center", CustomCellRender: singleDetete.optionCustomRender },
+                { HeaderText: NapTicketControl.Helper.renderCheckBoxAll(list), Name: "CustomAdd", Width: 30, HeaderAlign: "center", CellAlign: "center", CustomCellRender: singleDetete.optionCustomRender },
                 { HeaderText: "No", Name: "No", Width: 30, HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "BetID", Name: "BetId", Width: 98, HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "Member", Name: "Player", Width: 160, HeaderAlign: "center", CellAlign: "left" },
@@ -162,7 +163,13 @@ var singleDetete = {
     },
 
     optionCustomRender: function (cell) {
-        return "<input class='chk-ticket' value='" + cell.Value + "' type='checkbox' checked='checked'/>";
+        var isDisabled = cell.Value.toString() === "settled" ? true : false;
+        var disabled = isDisabled ? "disabled=disabled" : "";
+        var checkBoxItem = "<input class='chk-ticket' value='" + cell.Value + "' type='checkbox' " + disabled;
+
+        checkBoxItem += !isDisabled ? " checked='checked'>" : ">";
+
+        return checkBoxItem;
     },
 
     voidSingleBet: function () {
@@ -183,9 +190,9 @@ var singleDetete = {
             Bettypes: helper.GetBettypesChecked(),
             Betteam1378: $('#ddlBetTeam1378').val(),
             Betteam515: helper.GetBetteam515(),
-            Betteam430: helper.GetBetteam430(),
-            Betteam6: helper.GetBetteam6(),
-            Betteam14: helper.GetBetteam14(),
+            Betteam430: NapTicketControl.Helper.GetBetteam430(),
+            Betteam6: NapTicketControl.Helper.GetBetteam6(),
+            Betteam14: NapTicketControl.Helper.GetBetteam14(),
             Betteam16: helper.GetBetteam16(),
             SAFilter: $('#TicketType').val(),
             TransIds: helper.getSubTicketsChecked(),
@@ -384,6 +391,8 @@ DelSingleTicket.prototype.Init = function () {
         NapTicketControl.Helper.ToggleFilterBar(this);
     });
 
+    NapTicketControl.Helper.initAdvancedModeTotalGoal();
+    NapTicketControl.Helper.initAdvancedModeCorrectScores();
     // check all bettypes
     $('body').delegate('#chkallbettype', 'click', function (e) {
         e.stopPropagation();
@@ -394,8 +403,12 @@ DelSingleTicket.prototype.Init = function () {
             helper.expandAdvancedMode();
         } else {
             $('.chkbettype').removeAttr('checked');
-            helper.setStatusAllAdvanceCS(false, false);
-            helper.setStatusAllAdvanceTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTAndCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvanceCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTCS(false, false);
+            NapTicketControl.Helper.setStatusAllAdvanceTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTG(false, false);
+            NapTicketControl.Helper.setStatusAllAdvance1HTGAndTG(false, false);
             helper.setStatusAllAdvanceHDP(false);
             helper.setStatusAllAdvance1X2(false);
             helper.setStatusAllAdvanceHTFT(false, false);
@@ -415,26 +428,6 @@ DelSingleTicket.prototype.Init = function () {
 
         //begin
         helper.checkConstraintBettyeByEventTypeForAdvanceMode();
-    });
-
-    //Correct Scores check all
-    $('body').delegate('#chk-score-all', 'click', function () {
-        helper.setStatusAllAdvanceCS(this.checked, true);
-    });
-
-    //Correct Scores uncheck any item
-    $('body').delegate('.chk-score', 'click', function () {
-        helper.eventSubAdvanceCS();
-    });
-
-    //TG check all
-    $('body').delegate('#chk-tg-all', 'click', function () {
-        helper.setStatusAllAdvanceTG(this.checked, true);
-    });
-
-    //TG uncheck any item
-    $('body').delegate('.chk-tg', 'click', function () {
-        helper.eventSubAdvanceTG();
     });
 
     //HTFT check all

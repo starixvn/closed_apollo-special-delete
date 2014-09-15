@@ -43,6 +43,8 @@ namespace Fanex.TicketControl.Core.DTO
 
         public int Choice_SportType { get; set; }
 
+        public string Choice_Status { get; set; }
+
         public string RefNo { get; set; }
     }
 }

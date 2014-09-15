@@ -30,6 +30,8 @@ namespace Fanex.TicketControl.Core.DTO
             set;
         }
 
+        public string StakeHtml { get; set; }
+
         [ScriptIgnore]
         public ITicket Ticket
         {
