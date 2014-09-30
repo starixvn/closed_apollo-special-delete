@@ -619,21 +619,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\_Libs\MessageNotifier\jquery.messagenotifier.css" />
-    <Content Include="Web.Local.AppSettings.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Local.ConnectionString.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Local.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Local.Debug.config">
-      <DependentUpon>Web.Local.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Local.Release.config">
-      <DependentUpon>Web.Local.config</DependentUpon>
-    </Content>
+    <None Include="deployment.ignore" />
     <None Include="Scripts\_Libs\MonthPicker\monPickr-0.0.3-custom.less" />
     <Content Include="Content\base\colors.less" />
     <Content Include="Content\base\grid.less" />
@@ -653,6 +639,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserControl\Views\Shared\" />
+    <Folder Include="Configuration\" />
     <Folder Include="Scripts\_Libs\BlockUI\img\" />
   </ItemGroup>
   <ItemGroup>
@@ -674,6 +661,9 @@
       <Project>{FE5FD977-2CF8-4F46-932E-6B8D0D66B6F6}</Project>
       <Name>SportBook</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
