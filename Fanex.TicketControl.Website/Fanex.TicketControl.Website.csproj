@@ -230,6 +230,16 @@
     <Content Include="Areas\UserLogin\Views\Common\Style\AccessDenied.css" />
     <Content Include="Areas\UserLogin\Views\Common\Style\Images\accessDenied.gif" />
     <Content Include="Areas\UserLogin\Views\Common\Style\Images\UnderMaintenance.gif" />
+    <Content Include="Configuration\Web.AppSettings.Config.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.AppSettings.Config.tt</DependentUpon>
+    </Content>
+    <Content Include="Configuration\Web.config.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
     <Content Include="Content\base\img\dot-white.png" />
     <Content Include="Content\base\img\icon-close.png" />
     <Content Include="Content\base\img\icon-excel.gif" />
@@ -619,6 +629,37 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\_Libs\MessageNotifier\jquery.messagenotifier.css" />
+    <None Include="Configuration\Configuration.ttinclude" />
+    <None Include="Configuration\Web.AppSettings.Config.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Web.AppSettings.Config.txt</LastGenOutput>
+    </None>
+    <None Include="Configuration\Web.config.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Web.config.txt</LastGenOutput>
+    </None>
+    <Content Include="Configuration\Web.Local.AppSettings.config">
+      <DependentUpon>Web.AppSettings.Config.tt</DependentUpon>
+    </Content>
+    <Content Include="Configuration\Web.Local.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configuration\Web.Local.ConnectionStrings.config" />
+    <Content Include="Configuration\Web.PRO.AppSettings.config">
+      <DependentUpon>Web.AppSettings.Config.tt</DependentUpon>
+    </Content>
+    <Content Include="Configuration\Web.PRO.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
+    <Content Include="Configuration\Web.PRO.ConnectionStrings.config" />
+    <Content Include="Configuration\Web.Sandbox.AppSettings.config">
+      <DependentUpon>Web.AppSettings.Config.tt</DependentUpon>
+    </Content>
+    <Content Include="Configuration\Web.Sandbox.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
+    <Content Include="Configuration\Web.SandBox.ConnectionStrings.config" />
     <None Include="deployment.ignore" />
     <None Include="Scripts\_Libs\MonthPicker\monPickr-0.0.3-custom.less" />
     <Content Include="Content\base\colors.less" />
@@ -639,7 +680,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserControl\Views\Shared\" />
-    <Folder Include="Configuration\" />
     <Folder Include="Scripts\_Libs\BlockUI\img\" />
   </ItemGroup>
   <ItemGroup>
