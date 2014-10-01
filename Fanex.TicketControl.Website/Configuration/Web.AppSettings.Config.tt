@@ -1,0 +1,24 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".txt" #>
+<#@ include file="$(SolutionDir)\Packages\T4.TemplateFileManager.2.1.2\tools\ttinc\TemplateFilemanager.CS.ttinclude" #>
+<#@ include file="Configuration.ttinclude" #>
+<#
+    var manager = TemplateFileManager.Create(this);
+    foreach(var site in sites)
+    {
+        var fileName = string.Format("Web.{0}.AppSettings.config", site.Environment);
+        manager.StartNewFile(fileName);
+#>
+<?xml version="1.0"?>
+<appSettings>  
+  <add key="app_mail_id" value="<#= site.AppMailId #>"/>
+  <add key="app_mail_address" value="<#= site.AppMailAddress #>"/>
+  <add key="Email.SenderName" value="Suncity Accounting Administrator" />  
+  <add key="ipvnreplace" value="-"/>
+  <add key="RemoteRefURL" value="<#= site.RemoteRefURL #>"/>
+  <add key="BatchMsg.MaxTransIdPerBatch" value="50"/>
+</appSettings>
+<#
+    }
+    manager.Process();
+#>

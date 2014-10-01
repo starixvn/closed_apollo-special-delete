@@ -1,0 +1,7 @@
+﻿
+
+// Generated helper templates
+// Generated items
+// Fanex.TicketControl.Website\Configuration\Web.PRO.AppSettings.config
+// Fanex.TicketControl.Website\Configuration\Web.Sandbox.AppSettings.config
+// Fanex.TicketControl.Website\Configuration\Web.Local.AppSettings.config
