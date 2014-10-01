@@ -660,7 +660,7 @@
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
     <Content Include="Configuration\Web.SandBox.ConnectionStrings.config" />
-    <None Include="deployment.ignore" />
+    <Content Include="deployment.ignore" />
     <None Include="Scripts\_Libs\MonthPicker\monPickr-0.0.3-custom.less" />
     <Content Include="Content\base\colors.less" />
     <Content Include="Content\base\grid.less" />
