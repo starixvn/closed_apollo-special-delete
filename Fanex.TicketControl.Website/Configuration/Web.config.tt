@@ -53,7 +53,7 @@
   <system.web>
     <compilation targetFramework="4.0" debug="<#= site.Debug #>" />
     <authentication mode="Forms">
-      <forms protection="All" ticketCompatibilityMode="Framework40" cookieless="UseCookies"  loginUrl="~/UserLogin/Login"  timeout="2880" defaultUrl="~/Home/Index" path="/Settlement"/>
+      <forms protection="All" ticketCompatibilityMode="Framework40" cookieless="UseCookies"  loginUrl="~/UserLogin/Login"  timeout="2880" defaultUrl="~/Home/Index" path="/SpecialDelete"/>
     </authentication>
     <customErrors mode="<#= site.CustomErrorsMode #>">
       <error statusCode="403" redirect="~/Error.aspx?err=403"/>
